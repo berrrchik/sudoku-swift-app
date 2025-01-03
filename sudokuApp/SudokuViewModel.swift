@@ -77,6 +77,14 @@ class SudokuViewModel: ObservableObject {
         grid[row][col] = value
     }
     
+    func provideHint(for coordinate: SudokuCoordinate?) {
+            // Проверяем, что ячейка выбрана и не является фиксированной
+            guard let coordinate = coordinate,
+                  !fixedCells.contains(coordinate) else { return }
+            // Устанавливаем правильное значение из `solution`
+            grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
+        }
+    
     func fillWithSolution() {
             // Заполняем сетку решением
             grid = solution
