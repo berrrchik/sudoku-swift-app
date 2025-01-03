@@ -5,8 +5,10 @@ struct ContentView: View {
     @State private var selectedCell: SudokuCoordinate? = nil
     @State private var resultMessage: String? = nil // Сообщение "Правильно" или "Неправильно"
     @State private var isSolutionRevealed = false // Флаг, указывающий, что ответ показан
+    @State private var timer: Timer? = nil // Хранение таймера
+
     var body: some View {
-        VStack {
+        VStack(spacing: -3) {
             SudokuGridView(
                 grid: $viewModel.grid,
                 fixedCells: viewModel.fixedCells,
@@ -14,15 +16,15 @@ struct ContentView: View {
             )
             .padding()
 
-            VStack(spacing: 5) { // Вертикальный стек для строк
+            VStack(spacing: 4) { // Вертикальный стек для строк
                 ForEach(0..<3, id: \.self) { row in // Проходим по строкам
-                    HStack(spacing: 5) { // Горизонтальный стек для кнопок в строке
+                    HStack(spacing: 4) { // Горизонтальный стек для кнопок в строке
                         ForEach(1...3, id: \.self) { col in // Проходим по столбцам
                             let number = row * 3 + col // Вычисляем число для кнопки
                             Button("\(number)") {
-                                if let cell = selectedCell {
+                                if !isSolutionRevealed, let cell = selectedCell { // Блокируем изменение
                                     viewModel.updateCell(row: cell.row, col: cell.col, value: number)
-                                }
+                                                                    }
                             }
                             .frame(width: 50, height: 50)
                             .background(Color.black)
@@ -57,16 +59,37 @@ struct ContentView: View {
                 .cornerRadius(8)
 
                 Button("Проверить") { // Кнопка "Проверить"
-                    if viewModel.isSolutionCorrect() {
-                        resultMessage = "Правильно" // Если сетка совпадает с решением
+                    if !isSolutionRevealed {
+                        if viewModel.isSolutionCorrect() {
+                            resultMessage = "Правильно" // Если сетка совпадает с решением
+                        } else {
+                            resultMessage = "Неправильно" // Если есть расхождения
+                        }
                     } else {
-                        resultMessage = "Неправильно" // Если есть расхождения
+                        return
                     }
                 }
                 .frame(width: 90, height: 40)
                 .background(Color.blue)
                 .foregroundColor(.white)
                 .cornerRadius(8)
+                
+                Button("Подсказка") {
+                    if !isSolutionRevealed {
+                        viewModel.provideHint(for: selectedCell)
+                    } else {
+                        return
+                    }
+                }
+                .frame(width: 90, height: 40)
+                .background(Color.orange)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                
+            }
+            .padding()
+
+            HStack {
                 
                 Button("Удалить") { // Кнопка "Проверить"
                     if !isSolutionRevealed, let cell = selectedCell { // Проверяем, что ответ не показан
@@ -77,16 +100,21 @@ struct ContentView: View {
                 .background(Color.black)
                 .foregroundColor(.white)
                 .cornerRadius(8)
+                
+                Button("Назад") {
+                    if !isSolutionRevealed {
+                        viewModel.provideHint(for: selectedCell)
+                    } else {
+                        return
+                    }
+                }
+                .frame(width: 90, height: 40)
+                .background(Color.pink)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+                
             }
-            .padding()
-            Button("Подсказка") {
-                viewModel.provideHint(for: selectedCell)
-            }
-            .frame(width: 90, height: 40)
-            .background(Color.orange)
-            .foregroundColor(.white)
-            .cornerRadius(8)
-
+            
             if let message = resultMessage { // Показываем результат
                 Text(message)
                     .font(.title)

@@ -44,8 +44,9 @@ struct CellView: View {
         Text(value == 0 ? "" : "\(value)") // Если 0, показываем пустую ячейку
             .frame(width: 35, height: 35) // Размер ячейки
             .background(isFixed ? Color.gray : Color.white) // Фон зависит от состояния
-            .foregroundColor(isFixed ? .black : .blue) // Цвет текста
+            .foregroundColor(isFixed ? .black : .black) // Цвет текста
             .border(Color.black, width: 1) // Граница ячейки
+            .font(.system(size: 35))
     }
 }
 

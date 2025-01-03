@@ -72,7 +72,6 @@ class SudokuViewModel: ObservableObject {
         if fixedCells.contains(SudokuCoordinate(row: row, col: col)) {
             return
         }
-
         // Если ячейка не фиксированная, обновляем значение
         grid[row][col] = value
     }
@@ -113,6 +112,7 @@ class SudokuViewModel: ObservableObject {
         }
         return cells
     }
+    
     private func printGrid(_ grid: [[Int]]) {
             for row in grid {
                 print(row.map { String($0) }.joined(separator: " "))
