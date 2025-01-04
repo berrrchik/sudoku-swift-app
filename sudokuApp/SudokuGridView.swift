@@ -6,36 +6,6 @@ struct SudokuCoordinate: Hashable {
     let col: Int
 }
 
-// Отображает всю сетку судоку
-//struct SudokuGridView: View {
-//    @Binding var grid: [[Int]] // Массив чисел для отображения судоку
-//    let fixedCells: Set<SudokuCoordinate> // Фиксированные ячейки
-//    @Binding var selectedCell: SudokuCoordinate? // Текущая выбранная ячейка
-//
-//    var body: some View {
-//        VStack(spacing: 3) { // Столбец строк
-//            ForEach(0..<9, id: \.self) { row in // Проходим по строкам
-//                HStack(spacing: 3) { // Строка ячеек
-//                    ForEach(0..<9, id: \.self) { col in // Проходим по столбцам
-//                        let coordinate = SudokuCoordinate(row: row, col: col) // Координаты текущей ячейки
-//                        CellView(
-//                            value: grid[row][col], // Значение ячейки
-//                            isFixed: fixedCells.contains(coordinate) // Проверяем, фиксированная ли ячейка
-//                        )
-//                        .onTapGesture { // Обрабатываем нажатие
-//                            selectedCell = coordinate // Сохраняем выбранную ячейку
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//        .padding()
-//        .background(Color.gray.opacity(0.2)) // Фон всей сетки
-//        .cornerRadius(10) // Скругляем края
-//    }
-//}
-import SwiftUI
-
 struct SudokuGridView: View {
     @Binding var grid: [[Int]]
     let fixedCells: Set<SudokuCoordinate>
@@ -84,21 +54,6 @@ struct SudokuGridView: View {
         return selectedValue != 0 && grid[coordinate.row][coordinate.col] == selectedValue
     }
 }
-
-//// Отображает одну ячейку
-//struct CellView: View {
-//    let value: Int // Значение ячейки
-//    let isFixed: Bool // Фиксированная ли ячейка
-//
-//    var body: some View {
-//        Text(value == 0 ? "" : "\(value)") // Если 0, показываем пустую ячейку
-//            .frame(width: 35, height: 35) // Размер ячейки
-//            .background(isFixed ? Color.gray : Color.white) // Фон зависит от состояния
-//            .foregroundColor(isFixed ? .black : .black) // Цвет текста
-//            .border(Color.black, width: 1) // Граница ячейки
-//            .font(.system(size: 35))
-//    }
-//}
 
 struct CellView: View {
     let value: Int
