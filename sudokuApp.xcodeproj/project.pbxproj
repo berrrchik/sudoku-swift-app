@@ -17,6 +17,7 @@
 		5785713B2D286D0200917F88 /* SudokuGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785713A2D286D0200917F88 /* SudokuGridView.swift */; };
 		5785713D2D286D2E00917F88 /* SudokuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785713C2D286D2E00917F88 /* SudokuViewModel.swift */; };
 		5785713F2D286D7300917F88 /* SudokuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785713E2D286D7300917F88 /* SudokuModel.swift */; };
+		578571412D2C615000917F88 /* SudokuCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571402D2C615000917F88 /* SudokuCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		5785713A2D286D0200917F88 /* SudokuGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGridView.swift; sourceTree = "<group>"; };
 		5785713C2D286D2E00917F88 /* SudokuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuViewModel.swift; sourceTree = "<group>"; };
 		5785713E2D286D7300917F88 /* SudokuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuModel.swift; sourceTree = "<group>"; };
+		578571402D2C615000917F88 /* SudokuCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 				5785713E2D286D7300917F88 /* SudokuModel.swift */,
 				5785713C2D286D2E00917F88 /* SudokuViewModel.swift */,
 				5785713A2D286D0200917F88 /* SudokuGridView.swift */,
+				578571402D2C615000917F88 /* SudokuCellView.swift */,
 				5785710E2D28678700917F88 /* sudokuAppApp.swift */,
 				578571102D28678700917F88 /* ContentView.swift */,
 				578571122D28678800917F88 /* Assets.xcassets */,
@@ -267,6 +270,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5785713F2D286D7300917F88 /* SudokuModel.swift in Sources */,
+				578571412D2C615000917F88 /* SudokuCellView.swift in Sources */,
 				5785713B2D286D0200917F88 /* SudokuGridView.swift in Sources */,
 				578571112D28678700917F88 /* ContentView.swift in Sources */,
 				5785710F2D28678700917F88 /* sudokuAppApp.swift in Sources */,
