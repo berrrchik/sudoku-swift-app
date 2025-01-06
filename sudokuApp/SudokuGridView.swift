@@ -22,7 +22,8 @@ struct SudokuGridView: View {
                             isFixed: fixedCells.contains(coordinate),
                             isHighlighted: isCellHighlighted(coordinate: coordinate), // Подсветка
                             isSelected: selectedCell == coordinate, // Текущая ячейка
-                            isSameValue: isSameValueHighlighted(coordinate: coordinate) // Подсветка одинаковых значений
+                            isSameValue: isSameValueHighlighted(coordinate: coordinate), // Подсветка одинаковых значений
+                            borderWidths: getBorderWidths(row: row, col: col) // Передача толщины границ
                         )
                         .onTapGesture {
                             selectedCell = coordinate
@@ -54,13 +55,22 @@ struct SudokuGridView: View {
         let selectedValue = grid[selected.row][selected.col]
         return selectedValue != 0 && grid[coordinate.row][coordinate.col] == selectedValue
     }
+    
+    private func getBorderWidths(row: Int, col: Int) -> (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) {
+        return (
+            top: row % 3 == 0 ? 3.0 : 0.5,
+            left: col % 3 == 0 ? 3.0 : 0.5,
+            bottom: row == 8 ? 3.0 : 0.5,
+            right: col == 8 ? 3.0 : 0.5
+        )
+    }
 }
 
 // Предварительный просмотр
 #Preview {
     SudokuGridView(
         grid: .constant(Array(repeating: Array(repeating: 0, count: 9), count: 9)), // Пустая сетка 9x9
-        fixedCells: [SudokuCoordinate(row: 0, col: 0), SudokuCoordinate(row: 1, col: 1)], // Пара фиксированных ячеек
+        fixedCells: Set([SudokuCoordinate(row: 0, col: 0), SudokuCoordinate(row: 1, col: 1)]),
         selectedCell: .constant(nil) // Нет выбранной ячейки
     )
 }

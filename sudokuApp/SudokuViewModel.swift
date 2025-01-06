@@ -13,8 +13,11 @@ class SudokuViewModel: ObservableObject {
 
     private var solution: [[Int]] = [] // Хранит правильное решение
     
+    private var history: [[[Int]]] = [] // История состояний сетки
+    
     // Загрузка судоку с сервера
     func fetchSudoku(difficulty: String = "medium") {
+        history = []
         // Формируем URL запроса
         let urlString = "https://sudoku-api.vercel.app/api/dosuku?difficulty=\(difficulty)"
         guard let url = URL(string: urlString) else {
@@ -72,9 +75,21 @@ class SudokuViewModel: ObservableObject {
         if fixedCells.contains(SudokuCoordinate(row: row, col: col)) {
             return
         }
+        saveToHistory()
         // Если ячейка не фиксированная, обновляем значение
         grid[row][col] = value
     }
+    
+    // Сохранение текущего состояния в историю
+        private func saveToHistory() {
+            history.append(grid) // Добавляем текущее состояние сетки в массив истории
+        }
+
+        // Отмена последнего действия
+        func undoLastAction() {
+            guard !history.isEmpty else { return } // Проверяем, есть ли история
+            grid = history.removeLast() // Восстанавливаем последнее состояние и удаляем его из истории
+        }
     
     func provideHint(for coordinate: SudokuCoordinate?) {
             // Проверяем, что ячейка выбрана и не является фиксированной

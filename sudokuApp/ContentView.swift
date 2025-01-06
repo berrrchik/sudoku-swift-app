@@ -100,6 +100,7 @@ struct ContentView: View {
                 .cornerRadius(8)
                 
                 Button("Назад") {
+                    viewModel.undoLastAction() // Вызываем функцию отмены действия
                 }
                 .frame(width: 90, height: 40)
                 .background(Color.pink)
