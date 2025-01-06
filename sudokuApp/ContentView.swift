@@ -24,7 +24,7 @@ struct ContentView: View {
                             Button("\(number)") {
                                 if !isSolutionRevealed, let cell = selectedCell { // Блокируем изменение
                                     viewModel.updateCell(row: cell.row, col: cell.col, value: number)
-                                                                    }
+                                }
                             }
                             .frame(width: 50, height: 50)
                             .background(Color.black)
@@ -65,8 +65,6 @@ struct ContentView: View {
                         } else {
                             resultMessage = "Неправильно" // Если есть расхождения
                         }
-                    } else {
-                        return
                     }
                 }
                 .frame(width: 90, height: 40)
@@ -102,11 +100,6 @@ struct ContentView: View {
                 .cornerRadius(8)
                 
                 Button("Назад") {
-                    if !isSolutionRevealed {
-                        viewModel.provideHint(for: selectedCell)
-                    } else {
-                        return
-                    }
                 }
                 .frame(width: 90, height: 40)
                 .background(Color.pink)

@@ -12,9 +12,9 @@ struct SudokuGridView: View {
     @Binding var selectedCell: SudokuCoordinate?
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 0) {
             ForEach(0..<9, id: \.self) { row in
-                HStack(spacing: 2) {
+                HStack(spacing: 0) {
                     ForEach(0..<9, id: \.self) { col in
                         let coordinate = SudokuCoordinate(row: row, col: col)
                         CellView(
@@ -36,6 +36,7 @@ struct SudokuGridView: View {
         .cornerRadius(10)
     }
 
+    
     // Проверяет, нужно ли подсвечивать ячейку
     private func isCellHighlighted(coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
@@ -73,9 +74,14 @@ struct CellView: View {
             )
             .foregroundColor(.black)
             .border(Color.black, width: 1)
+            .font(
+                isFixed ? .system(size: 25) : .system(size: 23)
+            )
+            .bold(
+                isFixed == true
+            )
     }
 }
-
 
 
 // Предварительный просмотр
