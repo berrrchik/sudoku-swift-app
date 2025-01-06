@@ -8,8 +8,10 @@ struct SudokuCoordinate: Hashable {
 
 struct SudokuGridView: View {
     @Binding var grid: [[Int]]
+    @Binding var notes: [[Set<Int>]] // Передача заметок
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
+    
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,7 +25,8 @@ struct SudokuGridView: View {
                             isHighlighted: isCellHighlighted(coordinate: coordinate), // Подсветка
                             isSelected: selectedCell == coordinate, // Текущая ячейка
                             isSameValue: isSameValueHighlighted(coordinate: coordinate), // Подсветка одинаковых значений
-                            borderWidths: getBorderWidths(row: row, col: col) // Передача толщины границ
+                            borderWidths: getBorderWidths(row: row, col: col), // Передача толщины границ
+                            notes: notes[row][col] // Передача заметок конкретной ячейки
                         )
                         .onTapGesture {
                             selectedCell = coordinate
@@ -67,11 +70,11 @@ struct SudokuGridView: View {
 }
 
 // Предварительный просмотр
-#Preview {
-    SudokuGridView(
-        grid: .constant(Array(repeating: Array(repeating: 0, count: 9), count: 9)), // Пустая сетка 9x9
-        fixedCells: Set([SudokuCoordinate(row: 0, col: 0), SudokuCoordinate(row: 1, col: 1)]),
-        selectedCell: .constant(nil) // Нет выбранной ячейки
-    )
-}
+//#Preview {
+//    SudokuGridView(
+//        grid: .constant(Array(repeating: Array(repeating: 0, count: 9), count: 9)), // Пустая сетка 9x9
+//        fixedCells: Set([SudokuCoordinate(row: 0, col: 0), SudokuCoordinate(row: 1, col: 1)]),
+//        selectedCell: .constant(nil) // Нет выбранной ячейки
+//    )
+//}
 

@@ -11,6 +11,7 @@ struct ContentView: View {
         VStack(spacing: -3) {
             SudokuGridView(
                 grid: $viewModel.grid,
+                notes: $viewModel.notes,// Передаём заметки в компонент
                 fixedCells: viewModel.fixedCells,
                 selectedCell: $selectedCell
             )
@@ -66,6 +67,9 @@ struct ContentView: View {
                             resultMessage = "Неправильно" // Если есть расхождения
                         }
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                resultMessage = nil
+                            }
                 }
                 .frame(width: 90, height: 40)
                 .background(Color.blue)
@@ -100,12 +104,31 @@ struct ContentView: View {
                 .cornerRadius(8)
                 
                 Button("Назад") {
-                    viewModel.undoLastAction() // Вызываем функцию отмены действия
+                    if !isSolutionRevealed {
+                        viewModel.undoLastAction() // Вызываем функцию отмены действия
+                    }
                 }
                 .frame(width: 90, height: 40)
                 .background(Color.pink)
                 .foregroundColor(.white)
                 .cornerRadius(8)
+                
+                Button(action: {
+                    if !isSolutionRevealed {
+                        if let cell = selectedCell {
+                            viewModel.toggleNoteMode(row: cell.row, col: cell.col)
+                        }
+                    }
+                }) {
+                        HStack {
+                            Image(systemName: "pencil.circle")
+                            Text("Заметка")
+                        }
+                        .frame(width: 110, height: 40)
+                        .background(viewModel.isNoteMode ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                    }
                 
             }
             

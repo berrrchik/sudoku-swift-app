@@ -13,11 +13,16 @@ class SudokuViewModel: ObservableObject {
 
     private var solution: [[Int]] = [] // Хранит правильное решение
     
-    private var history: [[[Int]]] = [] // История состояний сетки
+    private var history: [([[Int]], [[Set<Int>]])] = [] // История сетки и заметок
+
+    @Published var isNoteMode: Bool = false // Режим заметок
     
+    @Published var notes: [[Set<Int>]] = Array(repeating: Array(repeating: Set<Int>(), count: 9), count: 9) // Инициализация заметок
+
     // Загрузка судоку с сервера
     func fetchSudoku(difficulty: String = "medium") {
         history = []
+        isNoteMode = false
         // Формируем URL запроса
         let urlString = "https://sudoku-api.vercel.app/api/dosuku?difficulty=\(difficulty)"
         guard let url = URL(string: urlString) else {
@@ -68,50 +73,91 @@ class SudokuViewModel: ObservableObject {
             }
         }.resume() // Запускаем задачу
     }
-
-    // Функция для обновления значения в ячейке
+    
     func updateCell(row: Int, col: Int, value: Int) {
-        // Проверяем, что ячейка не фиксированная
-        if fixedCells.contains(SudokuCoordinate(row: row, col: col)) {
-            return
+        let coordinate = SudokuCoordinate(row: row, col: col)
+        guard !fixedCells.contains(coordinate) else { return } // Проверяем, что ячейка не фиксированная
+
+        if isNoteMode {
+            // Работа с заметками
+            if notes[row][col].contains(value) {
+                notes[row][col].remove(value) // Удаляем заметку
+            } else {
+                saveToHistory() // Сохраняем перед добавлением заметки
+                notes[row][col].insert(value) // Добавляем заметку
+            }
+        } else {
+            saveToHistory()
+            grid[row][col] = value
+            notes[row][col] = [] // Очищаем заметки при вводе значения
         }
-        saveToHistory()
-        // Если ячейка не фиксированная, обновляем значение
-        grid[row][col] = value
     }
     
-    // Сохранение текущего состояния в историю
-        private func saveToHistory() {
-            history.append(grid) // Добавляем текущее состояние сетки в массив истории
-        }
+    func undoLastAction() {
+        guard let lastState = history.popLast() else { return }
+        grid = lastState.0
+        notes = lastState.1
 
-        // Отмена последнего действия
-        func undoLastAction() {
-            guard !history.isEmpty else { return } // Проверяем, есть ли история
-            grid = history.removeLast() // Восстанавливаем последнее состояние и удаляем его из истории
-        }
-    
-    func provideHint(for coordinate: SudokuCoordinate?) {
-            // Проверяем, что ячейка выбрана и не является фиксированной
-            guard let coordinate = coordinate,
-                  !fixedCells.contains(coordinate) else { return }
-            // Устанавливаем правильное значение из `solution`
+        // Фиксированные ячейки остаются неизменными
+        fixedCells.forEach { coordinate in
             grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
         }
+    }
+    
+    func toggleNoteMode(row: Int, col: Int) {
+        let coordinate = SudokuCoordinate(row: row, col: col)
+        guard !fixedCells.contains(coordinate) else { return } // Проверяем, что ячейка не фиксированная
+
+        if !isNoteMode && grid[row][col] != 0 {
+            saveToHistory()
+            notes[row][col] = [grid[row][col]] // Переносим значение в заметки
+            grid[row][col] = 0 // Очищаем значение
+        }
+        isNoteMode.toggle()
+    }
+
+
+    private func saveToHistory() {
+        // Сохраняем только состояние обычных ячеек
+        let editableGrid = grid
+        let editableNotes = notes
+
+        history.append((editableGrid, editableNotes))
+    }
+    
+    func provideHint(for coordinate: SudokuCoordinate?) {
+        guard let coordinate = coordinate, !fixedCells.contains(coordinate) else { return } // Проверяем, что ячейка выбрана и не фиксированная
+
+        // Устанавливаем правильное значение из решения
+        grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
+
+        // Очищаем заметки для этой ячейки
+        notes[coordinate.row][coordinate.col] = []
+
+        // Добавляем ячейку в фиксированные
+        fixedCells.insert(coordinate)
+    }
     
     func fillWithSolution() {
-            // Заполняем сетку решением
-            grid = solution
-        }
+        saveToHistory() // Сохраняем текущее состояние перед изменением
+        grid = solution // Заполняем сетку решением
+        notes = Array(repeating: Array(repeating: Set<Int>(), count: 9), count: 9) // Очищаем все заметки
+        isNoteMode = false // Сбрасываем режим заметок
+    }
     
     func isSolutionCorrect() -> Bool {
         return grid == solution
     }
     
     func clearCell(row: Int, col: Int) {
-            // Если ячейка не фиксированная, очищаем её
-            if !fixedCells.contains(SudokuCoordinate(row: row, col: col)) {
+            if isNoteMode {
+                saveToHistory() // Сохраняем перед очисткой заметок
+                notes[row][col] = []
+            } else {
+                guard !fixedCells.contains(SudokuCoordinate(row: row, col: col)) else { return }
+                saveToHistory()
                 grid[row][col] = 0
+                notes[row][col] = [] // Очищаем заметки при удалении значения
             }
         }
 
