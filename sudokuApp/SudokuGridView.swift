@@ -1,6 +1,5 @@
 import SwiftUI
 
-// Хранит координаты ячейки
 struct SudokuCoordinate: Hashable {
     let row: Int
     let col: Int
@@ -8,10 +7,9 @@ struct SudokuCoordinate: Hashable {
 
 struct SudokuGridView: View {
     @Binding var grid: [[Int]]
-    @Binding var notes: [[Set<Int>]] 
+    @Binding var notes: [[Set<Int>]]
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
-    
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,15 +20,13 @@ struct SudokuGridView: View {
                         CellView(
                             value: grid[row][col],
                             isFixed: fixedCells.contains(coordinate),
-                            isHighlighted: isCellHighlighted(coordinate: coordinate), // Подсветка
-                            isSelected: selectedCell == coordinate, // Текущая ячейка
-                            isSameValue: isSameValueHighlighted(coordinate: coordinate), // Подсветка одинаковых значений
-                            borderWidths: getBorderWidths(row: row, col: col), // Передача толщины границ
-                            notes: notes[row][col] // Передача заметок конкретной ячейки
+                            isHighlighted: isCellHighlighted(coordinate),
+                            isSelected: selectedCell == coordinate,
+                            isSameValue: isSameValueHighlighted(coordinate),
+                            borderWidths: getBorderWidths(row: row, col: col),
+                            notes: notes[row][col]
                         )
-                        .onTapGesture {
-                            selectedCell = coordinate
-                        }
+                        .onTapGesture { selectedCell = coordinate }
                     }
                 }
             }
@@ -40,23 +36,19 @@ struct SudokuGridView: View {
         .cornerRadius(10)
     }
 
-    private func isCellHighlighted(coordinate: SudokuCoordinate) -> Bool {
+    private func isCellHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
-        let sameRow = selected.row == coordinate.row
-        let sameCol = selected.col == coordinate.col
-        let sameBlock = (selected.row / 3 == coordinate.row / 3) &&
-                        (selected.col / 3 == coordinate.col / 3)
-        return sameRow || sameCol || sameBlock
+        return selected.row == coordinate.row || selected.col == coordinate.col ||
+            (selected.row / 3 == coordinate.row / 3 && selected.col / 3 == coordinate.col / 3)
     }
 
-    private func isSameValueHighlighted(coordinate: SudokuCoordinate) -> Bool {
-        guard let selected = selectedCell else { return false }
-        let selectedValue = grid[selected.row][selected.col]
-        return selectedValue != 0 && grid[coordinate.row][coordinate.col] == selectedValue
+    private func isSameValueHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
+        guard let selected = selectedCell, grid[selected.row][selected.col] != 0 else { return false }
+        return grid[coordinate.row][coordinate.col] == grid[selected.row][selected.col]
     }
-    
+
     private func getBorderWidths(row: Int, col: Int) -> (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) {
-        return (
+        (
             top: row % 3 == 0 ? 3.0 : 0.5,
             left: col % 3 == 0 ? 3.0 : 0.5,
             bottom: row == 8 ? 3.0 : 0.5,

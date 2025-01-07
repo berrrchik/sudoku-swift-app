@@ -6,9 +6,9 @@ struct SudokuModel: Decodable {
         let solution: [[Int]]
         let difficulty: String
     }
-
+    
     let newboard: NewBoard
-
+    
     struct NewBoard: Decodable {
         let grids: [Grid]
         let results: Int
