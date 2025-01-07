@@ -9,14 +9,83 @@ extension View {
     }
 }
 
+enum AppScreen {
+    case difficultySelection
+    case game(difficulty: Difficulty)
+}
+
 struct ContentView: View {
+    @State private var currentScreen: AppScreen = .difficultySelection
+    
+    var body: some View {
+        NavigationView {
+            VStack {
+                switch currentScreen {
+                case .difficultySelection:
+                    DifficultySelectionView { selectedDifficulty in
+                        currentScreen = .game(difficulty: selectedDifficulty)
+                    }
+                case .game(let difficulty):
+                    SudokuGameView(difficulty: difficulty) {
+                        currentScreen = .difficultySelection
+                    }
+                }
+            }
+            .navigationBarHidden(true)
+        }
+    }
+}
+
+struct DifficultySelectionView: View {
+    let onDifficultySelected: (Difficulty) -> Void
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Text("Выберите уровень сложности")
+                .multilineTextAlignment(.center)
+                .font(.title)
+                .padding()
+            
+            Button("Лёгкий") {
+                onDifficultySelected(.easy)
+            }
+            .styledButton(background: Color.green)
+            
+            Button("Средний") {
+                onDifficultySelected(.medium)
+            }
+            .styledButton(background: Color.orange)
+            
+            Button("Сложный") {
+                onDifficultySelected(.hard)
+            }
+            .styledButton(background: Color.red)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.gray.opacity(0.1))
+        .ignoresSafeArea()
+    }
+}
+
+struct SudokuGameView: View {
+    let difficulty: Difficulty
     @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
     @State private var resultMessage: String? = nil
     @State private var isSolutionRevealed = false
+    let onBack: () -> Void
     
     var body: some View {
         VStack(spacing: -3) {
+            HStack {
+                Button("Назад") {
+                    onBack()
+                }
+                .styledButton(background: Color.blue)
+                .padding()
+                Spacer()
+            }
+            
             SudokuGridView(
                 grid: $viewModel.grid,
                 notes: $viewModel.notes,
@@ -32,7 +101,7 @@ struct ContentView: View {
                 Button("Начать") {
                     isSolutionRevealed = false
                     viewModel.isGameStarted = true
-                    viewModel.startGame(difficulty: .easy)
+                    viewModel.startGame(difficulty: difficulty)
                 }
                 .styledButton(background: Color.green)
                 
