@@ -19,6 +19,8 @@
 		5785713F2D286D7300917F88 /* SudokuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785713E2D286D7300917F88 /* SudokuModel.swift */; };
 		578571412D2C615000917F88 /* SudokuCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571402D2C615000917F88 /* SudokuCellView.swift */; };
 		578571432D2DAE3C00917F88 /* SudokuGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571422D2DAE3C00917F88 /* SudokuGenerator.swift */; };
+		578571452D2DD25E00917F88 /* DifficultySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571442D2DD25E00917F88 /* DifficultySelectionView.swift */; };
+		578571472D2DD27400917F88 /* SudokuGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571462D2DD27400917F88 /* SudokuGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		5785713E2D286D7300917F88 /* SudokuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuModel.swift; sourceTree = "<group>"; };
 		578571402D2C615000917F88 /* SudokuCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuCellView.swift; sourceTree = "<group>"; };
 		578571422D2DAE3C00917F88 /* SudokuGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGenerator.swift; sourceTree = "<group>"; };
+		578571442D2DD25E00917F88 /* DifficultySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultySelectionView.swift; sourceTree = "<group>"; };
+		578571462D2DD27400917F88 /* SudokuGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,8 @@
 		5785710D2D28678700917F88 /* sudokuApp */ = {
 			isa = PBXGroup;
 			children = (
+				578571442D2DD25E00917F88 /* DifficultySelectionView.swift */,
+				578571462D2DD27400917F88 /* SudokuGameView.swift */,
 				578571422D2DAE3C00917F88 /* SudokuGenerator.swift */,
 				5785713E2D286D7300917F88 /* SudokuModel.swift */,
 				5785713C2D286D2E00917F88 /* SudokuViewModel.swift */,
@@ -276,6 +282,8 @@
 				578571412D2C615000917F88 /* SudokuCellView.swift in Sources */,
 				5785713B2D286D0200917F88 /* SudokuGridView.swift in Sources */,
 				578571112D28678700917F88 /* ContentView.swift in Sources */,
+				578571472D2DD27400917F88 /* SudokuGameView.swift in Sources */,
+				578571452D2DD25E00917F88 /* DifficultySelectionView.swift in Sources */,
 				5785710F2D28678700917F88 /* sudokuAppApp.swift in Sources */,
 				578571432D2DAE3C00917F88 /* SudokuGenerator.swift in Sources */,
 				5785713D2D286D2E00917F88 /* SudokuViewModel.swift in Sources */,

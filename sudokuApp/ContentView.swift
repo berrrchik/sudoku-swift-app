@@ -1,11 +1,25 @@
 import SwiftUI
 
 extension View {
-    func styledButton(background: Color) -> some View {
-        self.frame(width: 90, height: 40)
-            .background(background)
-            .foregroundColor(.white)
-            .cornerRadius(8)
+    func buttonStyle(systemImage: String? = nil, title: String? = nil, background: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack {
+                if let systemImage = systemImage {
+                    Image(systemName: systemImage)
+                        .resizable()
+                        .scaledToFit()
+                        .padding(6)
+                }
+                if let title = title {
+                    Text(title)
+                        .font(.system(size: 35))
+                }
+            }
+        }
+        .frame(width: 55, height: 55)
+        .background(background)
+        .foregroundColor(.white)
+        .cornerRadius(8)
     }
 }
 
@@ -46,24 +60,24 @@ struct DifficultySelectionView: View {
                 .font(.title)
                 .padding()
             
-            Button("Лёгкий") {
-                onDifficultySelected(.easy)
-            }
-            .styledButton(background: Color.green)
-            
-            Button("Средний") {
-                onDifficultySelected(.medium)
-            }
-            .styledButton(background: Color.orange)
-            
-            Button("Сложный") {
-                onDifficultySelected(.hard)
-            }
-            .styledButton(background: Color.red)
+            difficultyButton(title: "Лёгкий", color: .green, difficulty: .easy)
+            difficultyButton(title: "Средний", color: .orange, difficulty: .medium)
+            difficultyButton(title: "Тяжёлый", color: .red, difficulty: .hard)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.1))
         .ignoresSafeArea()
+    }
+    
+    private func difficultyButton(title: String, color: Color, difficulty: Difficulty) -> some View {
+        Button(title) {
+            onDifficultySelected(difficulty)
+        }
+        .frame(width: 150, height: 80)
+        .background(color)
+        .foregroundColor(.white)
+        .cornerRadius(8)
+        .font(.system(size: 25).bold())
     }
 }
 
@@ -76,14 +90,23 @@ struct SudokuGameView: View {
     let onBack: () -> Void
     
     var body: some View {
-        VStack(spacing: -3) {
-            HStack {
-                Button("Назад") {
+        VStack(spacing: -10) {
+            HStack(spacing: 20) {
+                buttonStyle(systemImage: "arrow.uturn.backward", background: .blue) {
                     onBack()
                 }
-                .styledButton(background: Color.blue)
                 .padding()
                 Spacer()
+                buttonStyle(systemImage: "play", background: .green) {
+                    isSolutionRevealed = false
+                    viewModel.isGameStarted = true
+                    viewModel.startGame(difficulty: difficulty)
+                }
+                
+                buttonStyle(systemImage: "checkmark", background: .red) {
+                    isSolutionRevealed = true
+                    viewModel.fillWithSolution()
+                }
             }
             
             SudokuGridView(
@@ -97,45 +120,48 @@ struct SudokuGameView: View {
             numberButtons()
                 .padding()
             
-            HStack {
-                Button("Начать") {
-                    isSolutionRevealed = false
-                    viewModel.isGameStarted = true
-                    viewModel.startGame(difficulty: difficulty)
-                }
-                .styledButton(background: Color.green)
+            HStack(spacing: 25) {
+//                buttonStyle(systemImage: "magnifyingglass", background: .blue) {
+//                    guard !isSolutionRevealed, viewModel.isGameStarted else { return }
+//                    resultMessage = viewModel.isSolutionCorrect() ? "Правильно" : "Неправильно"
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                        resultMessage = nil
+//                    }
+//                }
                 
-                Button("Ответ") {
-                    isSolutionRevealed = true
-                    viewModel.fillWithSolution()
-                }
-                .styledButton(background: Color.red)
-                
-                Button("Проверить") {
-                    guard !isSolutionRevealed, viewModel.isGameStarted else { return }
-                    resultMessage = viewModel.isSolutionCorrect() ? "Правильно" : "Неправильно"
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        resultMessage = nil
-                    }
-                }
-                .styledButton(background: Color.blue)
-                
-                Button("Подсказка") {
+                buttonStyle(systemImage: "lightbulb", background: .orange) {
                     if !isSolutionRevealed {
                         viewModel.provideHint(for: selectedCell)
                     }
                 }
-                .styledButton(background: Color.orange)
+                
+                buttonStyle(systemImage: "trash", background: .black) {
+                    if !isSolutionRevealed, let cell = selectedCell {
+                        viewModel.clearCell(row: cell.row, col: cell.col)
+                    }
+                }
+                
+                buttonStyle(systemImage: "arrow.uturn.backward.circle", background: .pink) {
+                    if !isSolutionRevealed {
+                        viewModel.undoLastAction()
+                    }
+                }
+                
+                buttonStyle(systemImage: "pencil", background: viewModel.isNoteMode ? .blue : .gray) {
+                    if !isSolutionRevealed {
+                        if let cell = selectedCell {
+                            viewModel.toggleNoteMode(row: cell.row, col: cell.col)
+                        }
+                    }
+                }
             }
             .padding()
             
-            actionButtons()
-            
-            Text(resultMessage ?? "")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(resultMessage == "Правильно" ? .green : .red)
-                .opacity(resultMessage == nil ? 0 : 1)
+//            Text(resultMessage ?? "")
+//                .font(.title)
+//                .fontWeight(.bold)
+//                .foregroundColor(resultMessage == "Правильно" ? .green : .red)
+//                .opacity(resultMessage == nil ? 0 : 1)
         }
         .onAppear {
             viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
@@ -149,57 +175,18 @@ struct SudokuGameView: View {
                 HStack(spacing: 4) {
                     ForEach(1...3, id: \.self) { col in
                         let number = row * 3 + col
-                        Button("\(number)") {
+                        buttonStyle(title: "\(number)", background: .black) {
                             if !isSolutionRevealed, let cell = selectedCell {
                                 viewModel.updateCell(row: cell.row, col: cell.col, value: number)
                             }
                         }
-                        .frame(width: 50, height: 50)
-                        .background(Color.black)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .font(.system(size: 35))
                     }
                 }
             }
-        }
-    }
-    
-    private func actionButtons() -> some View {
-        HStack {
-            Button("Удалить") {
-                if !isSolutionRevealed, let cell = selectedCell {
-                    viewModel.clearCell(row: cell.row, col: cell.col)
-                }
-            }
-            .styledButton(background: Color.black)
-            
-            Button("Назад") {
-                if !isSolutionRevealed {
-                    viewModel.undoLastAction()
-                }
-            }
-            .styledButton(background: Color.pink)
-            
-            Button(action: {
-                if !isSolutionRevealed {
-                    if let cell = selectedCell {
-                        viewModel.toggleNoteMode(row: cell.row, col: cell.col)
-                    }
-                }
-            }) {
-                HStack {
-                    Image(systemName: "pencil.circle")
-                    Text("Заметка")
-                }
-            }
-            .frame(width: 110, height: 40)
-            .background(viewModel.isNoteMode ? Color.blue : Color.gray)
-            .foregroundColor(.white)
-            .cornerRadius(8)
         }
     }
 }
+
 
 #Preview {
     ContentView()
