@@ -57,12 +57,30 @@ struct SudokuGridView: View {
     }
 }
 
-// Предварительный просмотр
-//#Preview {
-//    SudokuGridView(
-//        grid: .constant(Array(repeating: Array(repeating: 0, count: 9), count: 9)), // Пустая сетка 9x9
-//        fixedCells: Set([SudokuCoordinate(row: 0, col: 0), SudokuCoordinate(row: 1, col: 1)]),
-//        selectedCell: .constant(nil) // Нет выбранной ячейки
-//    )
-//}
 
+#Preview {
+    SudokuGridView(
+        grid: .constant([
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ]),
+        notes: .constant(Array(repeating: Array(repeating: Set<Int>(), count: 9), count: 9)),
+        fixedCells: Set([
+            SudokuCoordinate(row: 0, col: 0),
+            SudokuCoordinate(row: 0, col: 1),
+            SudokuCoordinate(row: 0, col: 4),
+            SudokuCoordinate(row: 1, col: 0),
+            SudokuCoordinate(row: 1, col: 3),
+            SudokuCoordinate(row: 1, col: 4),
+            SudokuCoordinate(row: 1, col: 5)
+        ]),
+        selectedCell: .constant(SudokuCoordinate(row: 4, col: 4))
+    )
+}
