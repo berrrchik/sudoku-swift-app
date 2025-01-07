@@ -9,47 +9,23 @@ class SudokuViewModel: ObservableObject {
     @Published var fixedCells: Set<SudokuCoordinate> = []
     private var solution: [[Int]] = []
     private var history: [([[Int]], [[Set<Int>]])] = []
-
-    func fetchSudoku(difficulty: String = "medium") {
+    
+    func startGame(difficulty: Difficulty) {
         history = []
         isNoteMode = false
         isGameStarted = true
-        let urlString = "https://sudoku-api.vercel.app/api/dosuku?difficulty=\(difficulty)"
-        guard let url = URL(string: urlString) else {
-            print("Неверный URL")
-            return
-        }
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
-                print("Ошибка загрузки: \(error.localizedDescription)")
-                return
-            }
+        let puzzle = SudokuGenerator.generatePuzzle(difficulty: difficulty)
+        grid = puzzle.puzzle
+        solution = puzzle.solution
+        fixedCells = getFixedCells(from: grid)
 
-            guard let data = data else {
-                print("Нет данных от сервера")
-                return
-            }
-
-            do {
-                let sudoku = try JSONDecoder().decode(SudokuModel.self, from: data)
-                if let firstGrid = sudoku.newboard.grids.first {
-                    DispatchQueue.main.async {
-                        self.grid = firstGrid.value
-                        self.solution = firstGrid.solution
-                        self.fixedCells = self.getFixedCells(from: firstGrid.value)
-                        print("Value:")
-                        self.printGrid(self.grid)
-                        print("Solution:")
-                        self.printGrid(self.solution)
-                    }
-                }
-            } catch {
-                print("Ошибка парсинга данных: \(error.localizedDescription)")
-            }
-        }.resume()
+        print("Puzzle:")
+        printGrid(grid)
+        print("Solution:")
+        printGrid(solution)
     }
-
+    
     func updateCell(row: Int, col: Int, value: Int) {
         guard isGameStarted else { return }
         let coordinate = SudokuCoordinate(row: row, col: col)
@@ -145,11 +121,5 @@ class SudokuViewModel: ObservableObject {
             grid[row][col] = 0
         }
         isNoteMode.toggle()
-    }
-}
-
-extension Set where Element == Int {
-    mutating func toggle(_ value: Int) {
-        if contains(value) { remove(value) } else { insert(value) }
     }
 }

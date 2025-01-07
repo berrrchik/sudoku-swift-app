@@ -32,7 +32,7 @@ struct ContentView: View {
                 Button("Начать") {
                     isSolutionRevealed = false
                     viewModel.isGameStarted = true
-                    viewModel.fetchSudoku(difficulty: "medium")
+                    viewModel.startGame(difficulty: .easy)
                 }
                 .styledButton(background: Color.green)
                 
