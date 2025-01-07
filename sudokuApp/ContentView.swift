@@ -3,27 +3,26 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
-    @State private var resultMessage: String? = nil // Сообщение "Правильно" или "Неправильно"
-    @State private var isSolutionRevealed = false // Флаг, указывающий, что ответ показан
-    @State private var timer: Timer? = nil // Хранение таймера
+    @State private var resultMessage: String? = nil
+    @State private var isSolutionRevealed = false
 
     var body: some View {
         VStack(spacing: -3) {
             SudokuGridView(
                 grid: $viewModel.grid,
-                notes: $viewModel.notes,// Передаём заметки в компонент
+                notes: $viewModel.notes,
                 fixedCells: viewModel.fixedCells,
                 selectedCell: $selectedCell
             )
             .padding()
 
-            VStack(spacing: 4) { // Вертикальный стек для строк
-                ForEach(0..<3, id: \.self) { row in // Проходим по строкам
-                    HStack(spacing: 4) { // Горизонтальный стек для кнопок в строке
-                        ForEach(1...3, id: \.self) { col in // Проходим по столбцам
-                            let number = row * 3 + col // Вычисляем число для кнопки
+            VStack(spacing: 4) {
+                ForEach(0..<3, id: \.self) { row in
+                    HStack(spacing: 4) {
+                        ForEach(1...3, id: \.self) { col in
+                            let number = row * 3 + col
                             Button("\(number)") {
-                                if !isSolutionRevealed, let cell = selectedCell { // Блокируем изменение
+                                if !isSolutionRevealed, let cell = selectedCell {
                                     viewModel.updateCell(row: cell.row, col: cell.col, value: number)
                                 }
                             }
@@ -40,8 +39,8 @@ struct ContentView: View {
 
             HStack {
                 Button("Начать") {
-                    resultMessage = nil // Сбрасываем сообщение
-                    isSolutionRevealed = false // Сбрасываем флаг
+                    isSolutionRevealed = false
+                    viewModel.isGameStarted = true
                     viewModel.fetchSudoku(difficulty: "medium")
                 }
                 .frame(width: 70, height: 40)
@@ -50,8 +49,7 @@ struct ContentView: View {
                 .cornerRadius(8)
 
                 Button("Ответ") {
-                    resultMessage = nil // Сбрасываем сообщение
-                    isSolutionRevealed = true // Устанавливаем флаг, что ответ показан
+                    isSolutionRevealed = true
                     viewModel.fillWithSolution()
                 }
                 .frame(width: 70, height: 40)
@@ -59,12 +57,12 @@ struct ContentView: View {
                 .foregroundColor(.white)
                 .cornerRadius(8)
 
-                Button("Проверить") { // Кнопка "Проверить"
+                Button("Проверить") {
                     if !isSolutionRevealed {
                         if viewModel.isSolutionCorrect() {
-                            resultMessage = "Правильно" // Если сетка совпадает с решением
+                            resultMessage = "Правильно"
                         } else {
-                            resultMessage = "Неправильно" // Если есть расхождения
+                            resultMessage = "Неправильно"
                         }
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -93,8 +91,8 @@ struct ContentView: View {
 
             HStack {
                 
-                Button("Удалить") { // Кнопка "Проверить"
-                    if !isSolutionRevealed, let cell = selectedCell { // Проверяем, что ответ не показан
+                Button("Удалить") {
+                    if !isSolutionRevealed, let cell = selectedCell {
                         viewModel.clearCell(row: cell.row, col: cell.col)
                     }
                 }
@@ -105,7 +103,7 @@ struct ContentView: View {
                 
                 Button("Назад") {
                     if !isSolutionRevealed {
-                        viewModel.undoLastAction() // Вызываем функцию отмены действия
+                        viewModel.undoLastAction()
                     }
                 }
                 .frame(width: 90, height: 40)
@@ -132,7 +130,7 @@ struct ContentView: View {
                 
             }
             
-            if let message = resultMessage { // Показываем результат
+            if let message = resultMessage {
                 Text(message)
                     .font(.title)
                     .fontWeight(.bold)
@@ -140,7 +138,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9) // Пустая доска
+            viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
         }
         .padding()
     }

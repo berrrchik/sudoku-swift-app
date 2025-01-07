@@ -4,11 +4,11 @@ import SwiftUI
 struct CellView: View {
     let value: Int
     let isFixed: Bool
-    let isHighlighted: Bool // Подсвечивание строки, столбца, блока
-    let isSelected: Bool // Выбранная ячейка
-    let isSameValue: Bool // Подсветка одинаковых значений
-    let borderWidths: (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) // Толщины границ
-    let notes: Set<Int> // Заметки для текущей ячейки
+    let isHighlighted: Bool
+    let isSelected: Bool
+    let isSameValue: Bool
+    let borderWidths: (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat)
+    let notes: Set<Int> 
     
     var body: some View {
             ZStack {

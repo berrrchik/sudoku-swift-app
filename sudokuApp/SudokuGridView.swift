@@ -8,7 +8,7 @@ struct SudokuCoordinate: Hashable {
 
 struct SudokuGridView: View {
     @Binding var grid: [[Int]]
-    @Binding var notes: [[Set<Int>]] // Передача заметок
+    @Binding var notes: [[Set<Int>]] 
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
     
@@ -40,11 +40,8 @@ struct SudokuGridView: View {
         .cornerRadius(10)
     }
 
-    
-    // Проверяет, нужно ли подсвечивать ячейку
     private func isCellHighlighted(coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
-        // Подсвечиваем строку, столбец или блок 3x3
         let sameRow = selected.row == coordinate.row
         let sameCol = selected.col == coordinate.col
         let sameBlock = (selected.row / 3 == coordinate.row / 3) &&
@@ -52,7 +49,6 @@ struct SudokuGridView: View {
         return sameRow || sameCol || sameBlock
     }
 
-    // Проверяет, совпадает ли значение в ячейке с выбранной
     private func isSameValueHighlighted(coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
         let selectedValue = grid[selected.row][selected.col]
