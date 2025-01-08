@@ -52,3 +52,19 @@
 2. Склонируйте репозиторий:
    ```bash
    git clone https://github.com/berrrchik/sudoku-swift-app
+3. Откройте проект в Xcode и запустите.
+
+---
+
+## Скриншоты
+
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/9109a060-1236-414f-b284-68433be1e3de" alt="Экран выбора сложности" width="32%" />
+   <img src="https://github.com/user-attachments/assets/5b8485aa-7883-471e-9413-01bc5f3aa475" alt="Отображение доски" width="32%" />
+   <img src="https://github.com/user-attachments/assets/d46862ab-1c16-40c7-b49d-32150842eeaf" alt="Отображение судоку" width="32%" />
+   <img src="https://github.com/user-attachments/assets/beed7904-7fd8-477e-a671-edd283c2c4a3" alt="Отображение выбранной ячейки" width="32%" />
+   <img src="https://github.com/user-attachments/assets/a967d3e9-0a88-41fc-8efd-4c323fc892a4" alt="Режим заметок" width="32%" />
+   <img src="https://github.com/user-attachments/assets/959c1d55-ae61-4287-9202-4f61d7d04516" alt="Решение" width="32%" />
+</p>
+
+
