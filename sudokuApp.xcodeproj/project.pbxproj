@@ -21,6 +21,7 @@
 		578571432D2DAE3C00917F88 /* SudokuGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571422D2DAE3C00917F88 /* SudokuGenerator.swift */; };
 		578571452D2DD25E00917F88 /* DifficultySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571442D2DD25E00917F88 /* DifficultySelectionView.swift */; };
 		578571472D2DD27400917F88 /* SudokuGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571462D2DD27400917F88 /* SudokuGameView.swift */; };
+		5785714D2D300DD200917F88 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5785714C2D300DD200917F88 /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		578571422D2DAE3C00917F88 /* SudokuGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGenerator.swift; sourceTree = "<group>"; };
 		578571442D2DD25E00917F88 /* DifficultySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultySelectionView.swift; sourceTree = "<group>"; };
 		578571462D2DD27400917F88 /* SudokuGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGameView.swift; sourceTree = "<group>"; };
+		5785714C2D300DD200917F88 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 				5785710E2D28678700917F88 /* sudokuAppApp.swift */,
 				578571122D28678800917F88 /* Assets.xcassets */,
 				578571142D28678800917F88 /* Preview Content */,
+				5785714C2D300DD200917F88 /* Localizable.xcstrings */,
 			);
 			path = sudokuApp;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 578571022D28678700917F88;
 			productRefGroup = 5785710C2D28678700917F88 /* Products */;
@@ -270,6 +274,7 @@
 			files = (
 				578571162D28678800917F88 /* Preview Assets.xcassets in Resources */,
 				578571132D28678800917F88 /* Assets.xcassets in Resources */,
+				5785714D2D300DD200917F88 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -2,8 +2,8 @@ import Foundation
 import SwiftUI
 
 extension View {
-    func buttonStyle(systemImage: String? = nil, title: String? = nil, subtitle: String? = nil, background: Color, action: @escaping () -> Void) -> some View {
-        VStack(spacing: 4) { 
+    func buttonStyle(systemImage: String? = nil, title: String? = nil, subtitleKey: String? = nil, background: Color, action: @escaping () -> Void) -> some View {
+        VStack(spacing: 4) {
             Button(action: action) {
                 VStack {
                     if let systemImage = systemImage {
@@ -23,8 +23,8 @@ extension View {
             .foregroundColor(.white)
             .cornerRadius(8)
             
-            if let subtitle = subtitle {
-                Text(subtitle)
+            if let subtitleKey = subtitleKey {
+                Text(NSLocalizedString(subtitleKey, comment: ""))
                     .font(.caption)
                     .foregroundColor(.black)
             }
@@ -44,17 +44,17 @@ struct SudokuGameView: View {
     var body: some View {
         VStack(spacing: -15) {
             HStack(spacing: 20) {
-                buttonStyle(systemImage: "arrow.uturn.backward",subtitle: "Вернуться", background: .blue) {
+                buttonStyle(systemImage: "arrow.uturn.backward", subtitleKey: "go.back.button.subtitle", background: .blue) {
                     onBack()
                 }
                 Spacer()
-                buttonStyle(systemImage: "play", subtitle: "Начать", background: .green) {
+                buttonStyle(systemImage: "play", subtitleKey: "start.button.subtitle", background: .green) {
                     isSolutionRevealed = false
                     viewModel.isGameStarted = true
                     viewModel.startGame(difficulty: difficulty)
                 }
                 
-                buttonStyle(systemImage: "checkmark", subtitle: "Ответ", background: .red) {
+                buttonStyle(systemImage: "checkmark", subtitleKey: "answer.button.subtitle", background: .red) {
                     isSolutionRevealed = true
                     viewModel.fillWithSolution()
                 }
@@ -80,25 +80,25 @@ struct SudokuGameView: View {
 //                    }
 //                }
                 
-                buttonStyle(systemImage: "lightbulb", subtitle: "Подсказка", background: .orange) {
+                buttonStyle(systemImage: "lightbulb", subtitleKey: "hint.button.subtitle", background: .orange) {
                         if !isSolutionRevealed {
                             viewModel.provideHint(for: selectedCell)
                         }
                     }
                     
-                    buttonStyle(systemImage: "trash", subtitle: "Удалить", background: .black) {
+                    buttonStyle(systemImage: "trash", subtitleKey: "delete.button.subtitle", background: .black) {
                         if !isSolutionRevealed, let cell = selectedCell {
                             viewModel.clearCell(row: cell.row, col: cell.col)
                         }
                     }
                     
-                    buttonStyle(systemImage: "arrow.uturn.backward.circle", subtitle: "Назад", background: .pink) {
+                    buttonStyle(systemImage: "arrow.uturn.backward.circle", subtitleKey: "go.back.button.subtitle", background: .pink) {
                         if !isSolutionRevealed {
                             viewModel.undoLastAction()
                         }
                     }
                     
-                    buttonStyle(systemImage: "pencil", subtitle: "Заметка", background: viewModel.isNoteMode ? .blue : .gray) {
+                    buttonStyle(systemImage: "pencil", subtitleKey: "notes.button.subtitle", background: viewModel.isNoteMode ? .blue : .gray) {
                         if !isSolutionRevealed {
                             if let cell = selectedCell {
                                 viewModel.toggleNoteMode(row: cell.row, col: cell.col)

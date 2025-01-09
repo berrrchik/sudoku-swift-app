@@ -6,22 +6,22 @@ struct DifficultySelectionView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Выберите уровень сложности")
+            Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
                 .multilineTextAlignment(.center)
                 .font(.title)
                 .padding()
             
-            difficultyButton(title: "Лёгкий", color: .green, difficulty: .easy)
-            difficultyButton(title: "Средний", color: .orange, difficulty: .medium)
-            difficultyButton(title: "Тяжёлый", color: .red, difficulty: .hard)
+            difficultyButton(titleKey: "easy.level", color: .green, difficulty: .easy)
+            difficultyButton(titleKey: "medium.level", color: .orange, difficulty: .medium)
+            difficultyButton(titleKey: "hard.level", color: .red, difficulty: .hard)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.gray.opacity(0.1))
         .ignoresSafeArea()
     }
     
-    private func difficultyButton(title: String, color: Color, difficulty: Difficulty) -> some View {
-        Button(title) {
+    private func difficultyButton(titleKey: String, color: Color, difficulty: Difficulty) -> some View {
+        Button(NSLocalizedString(titleKey, comment: "Difficulty level")) {
             onDifficultySelected(difficulty)
         }
         .frame(width: 150, height: 80)
@@ -31,6 +31,7 @@ struct DifficultySelectionView: View {
         .font(.system(size: 25).bold())
     }
 }
+
 
 #Preview {
     DifficultySelectionView(onDifficultySelected: {_ in })
