@@ -1,0 +1,32 @@
+# Xcode
+.DS_Store
+build/
+DerivedData/
+*.xcuserdatad
+*.xcuserdata
+*.swp
+*.lock
+*.xcworkspace
+
+# Swift Package Manager
+.build/
+
+# Firebase
+GoogleService-Info.plist
+
+# Logs
+*.log
+*.tmp
+
+# Temporary files
+*.tmp
+*.swp
+*.xcscmblueprint
+*.xccheckout
+
+# IDE specific
+.idea/
+.vscode/
+
+# Environment files
+.env
