@@ -7,6 +7,8 @@ struct CellView: View {
     let isHighlighted: Bool
     let isSelected: Bool
     let isSameValue: Bool
+    let isIncorrect: Bool 
+//    let isChecked: Bool
     let borderWidths: (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat)
     let notes: Set<Int>
     
@@ -24,7 +26,7 @@ struct CellView: View {
             if value != 0 {
                 Text("\(value)")
                     .font(.system(size: isFixed ? 25 : 23, weight: isFixed ? .bold : .regular))
-                    .foregroundColor(.black)
+                    .foregroundColor(isIncorrect ? .red : .black)
             }
             
             if !notes.isEmpty && !isFixed {

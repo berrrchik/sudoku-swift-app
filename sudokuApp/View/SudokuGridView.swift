@@ -10,6 +10,8 @@ struct SudokuGridView: View {
     @Binding var notes: [[Set<Int>]]
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
+    let incorrectCells: Set<SudokuCoordinate> // Новое свойство
+//    let isChecked: Bool
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,6 +25,8 @@ struct SudokuGridView: View {
                             isHighlighted: isCellHighlighted(coordinate),
                             isSelected: selectedCell == coordinate,
                             isSameValue: isSameValueHighlighted(coordinate),
+                            isIncorrect: incorrectCells.contains(coordinate),
+//                            isChecked: isChecked,
                             borderWidths: getBorderWidths(row: row, col: col),
                             notes: notes[row][col]
                         )
@@ -81,6 +85,8 @@ struct SudokuGridView: View {
             SudokuCoordinate(row: 1, col: 4),
             SudokuCoordinate(row: 1, col: 5)
         ]),
-        selectedCell: .constant(SudokuCoordinate(row: 4, col: 4))
+        selectedCell: .constant(SudokuCoordinate(row: 3, col: 4)),
+        incorrectCells: Set([SudokuCoordinate(row: 3, col: 4)])
+//        isChecked: true
     )
 }

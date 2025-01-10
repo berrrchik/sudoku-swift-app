@@ -7,6 +7,7 @@ struct RegistrationView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
+    @State private var showLogin = false
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
@@ -17,7 +18,7 @@ struct RegistrationView: View {
 
             SecureField("Password", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-
+//            Spacer()
             Button("Register") {
                 authViewModel.register(email: email, password: password) { error in
                     if let error = error {
@@ -28,11 +29,22 @@ struct RegistrationView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
-
+            
             Text(errorMessage)
                 .foregroundColor(.red)
+            
+            Spacer()
+            
+            Button("Уже есть акккаунт? Войдите") {
+                showLogin = true
+            }
+            .foregroundColor(.blue)
+            
         }
         .padding()
+        .fullScreenCover(isPresented: $showLogin) {
+            LoginView(onLoginSuccess: {})
+        }
     }
 }
 

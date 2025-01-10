@@ -31,7 +31,6 @@
 		5785715F2D302A8F00917F88 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785715E2D302A8F00917F88 /* UserModel.swift */; };
 		57AB745C2D30312800FF7A05 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 57AB745B2D30312800FF7A05 /* FirebaseAuth */; };
 		57AB745E2D30313300FF7A05 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 57AB745D2D30313300FF7A05 /* FirebaseFirestore */; };
-		57AB74602D30936300FF7A05 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 57AB745F2D30936300FF7A05 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +75,6 @@
 		578571572D302A4200917F88 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		5785715A2D302A7500917F88 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		5785715E2D302A8F00917F88 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
-		57AB745F2D30936300FF7A05 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,7 +137,6 @@
 				578571142D28678800917F88 /* Preview Content */,
 				5785714C2D300DD200917F88 /* Localizable.xcstrings */,
 				5785714E2D30219000917F88 /* GoogleService-Info.plist */,
-				57AB745F2D30936300FF7A05 /* .gitignore */,
 			);
 			path = sudokuApp;
 			sourceTree = "<group>";
@@ -323,7 +320,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57AB74602D30936300FF7A05 /* .gitignore in Resources */,
 				578571162D28678800917F88 /* Preview Assets.xcassets in Resources */,
 				5785714F2D30219100917F88 /* GoogleService-Info.plist in Resources */,
 				578571132D28678800917F88 /* Assets.xcassets in Resources */,

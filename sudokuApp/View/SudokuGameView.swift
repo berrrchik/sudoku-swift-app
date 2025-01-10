@@ -32,19 +32,28 @@ extension View {
     }
 }
 
+struct AlertIdentifier: Identifiable {
+    enum Choice {
+        case warning, resultCorrect, resultIncorrect
+    }
+
+    var id: Choice
+}
 
 struct SudokuGameView: View {
     @StateObject private var authViewModel = AuthViewModel()
     let difficulty: Difficulty
     @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
-    @State private var resultMessage: String? = nil
     @State private var isSolutionRevealed = false
     let onBack: () -> Void
     
+    @State private var alertIdentifier: AlertIdentifier?
+//    @Published var incorrectCells: Set<SudokuCoordinate> = []
+    
     var body: some View {
         VStack(spacing: -15) {
-            HStack(spacing: 20) {
+            HStack(spacing: 15) {
                 buttonStyle(systemImage: "arrow.uturn.backward", subtitleKey: "go.back.button.subtitle", background: .blue) {
                     onBack()
                 }
@@ -55,9 +64,13 @@ struct SudokuGameView: View {
                     viewModel.startGame(difficulty: difficulty)
                 }
                 
+//                buttonStyle(systemImage: "checkmark.circle", subtitleKey: "Проверить", background: .purple) {
+//                    viewModel.checkGrid()
+//                }
+                
                 buttonStyle(systemImage: "checkmark", subtitleKey: "answer.button.subtitle", background: .red) {
-                    isSolutionRevealed = true
-                    viewModel.fillWithSolution()
+                    print("Showing warning alert")
+                    alertIdentifier = AlertIdentifier(id: .warning)
                 }
             }
             
@@ -65,61 +78,111 @@ struct SudokuGameView: View {
                 grid: $viewModel.grid,
                 notes: $viewModel.notes,
                 fixedCells: viewModel.fixedCells,
-                selectedCell: $selectedCell
+                selectedCell: $selectedCell,
+                incorrectCells: viewModel.incorrectCells
+//                isChecked: viewModel.isChecked
             )
             .padding()
             
             numberButtons()
                 .padding()
             
-            HStack(spacing: 25) {
-//                buttonStyle(systemImage: "magnifyingglass", background: .blue) {
-//                    guard !isSolutionRevealed, viewModel.isGameStarted else { return }
-//                    resultMessage = viewModel.isSolutionCorrect() ? "Правильно" : "Неправильно"
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                        resultMessage = nil
-//                    }
-//                }
+            HStack(spacing: 20) {
                 
-                buttonStyle(systemImage: "lightbulb", subtitleKey: "hint.button.subtitle", background: .orange) {
-                        if !isSolutionRevealed {
-                            viewModel.provideHint(for: selectedCell)
+                ZStack {
+                    buttonStyle(systemImage: "lightbulb", subtitleKey: "hint.button.subtitle", background: .orange) {
+                        viewModel.provideHint(for: selectedCell)
+                    }
+                    if !isSolutionRevealed {
+                        if viewModel.hintsUsed < 5 {
+                            Circle()
+                                .frame(width: 24, height: 24)
+                                .foregroundColor(.red)
+                                .overlay(
+                                    Text("\(5 - viewModel.hintsUsed)")
+                                        .foregroundColor(.white)
+                                        .font(.system(size: 16, weight: .bold))
+                                )
+                                .offset(x: 25, y: -30)
                         }
                     }
-                    
-                    buttonStyle(systemImage: "trash", subtitleKey: "delete.button.subtitle", background: .black) {
-                        if !isSolutionRevealed, let cell = selectedCell {
-                            viewModel.clearCell(row: cell.row, col: cell.col)
+                }
+                
+                buttonStyle(systemImage: "trash", subtitleKey: "delete.button.subtitle", background: .black) {
+                    if !isSolutionRevealed, let cell = selectedCell {
+                        viewModel.clearCell(row: cell.row, col: cell.col)
+                    }
+                }
+                
+                buttonStyle(systemImage: "arrow.uturn.backward.circle", subtitleKey: "undo.button.subtitle", background: .pink) {
+                    if !isSolutionRevealed {
+                        viewModel.undoLastAction()
+                    }
+                }
+                
+                buttonStyle(systemImage: "pencil", subtitleKey: "notes.button.subtitle", background: viewModel.isNoteMode ? .blue : .gray) {
+                    if !isSolutionRevealed {
+                        if let cell = selectedCell {
+                            viewModel.toggleNoteMode(row: cell.row, col: cell.col)
                         }
                     }
-                    
-                    buttonStyle(systemImage: "arrow.uturn.backward.circle", subtitleKey: "go.back.button.subtitle", background: .pink) {
-                        if !isSolutionRevealed {
-                            viewModel.undoLastAction()
-                        }
-                    }
-                    
-                    buttonStyle(systemImage: "pencil", subtitleKey: "notes.button.subtitle", background: viewModel.isNoteMode ? .blue : .gray) {
-                        if !isSolutionRevealed {
-                            if let cell = selectedCell {
-                                viewModel.toggleNoteMode(row: cell.row, col: cell.col)
-                            }
-                        }
-                    }
+                }
             }
             .padding()
             
-//            Text(resultMessage ?? "")
-//                .font(.title)
-//                .fontWeight(.bold)
-//                .foregroundColor(resultMessage == "Правильно" ? .green : .red)
-//                .opacity(resultMessage == nil ? 0 : 1)
         }
         .onAppear {
             viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+//            viewModel.startGame(difficulty: difficulty)
+            viewModel.onResultMessageUpdate = { message in
+                print("Message received: \(message)")
+                DispatchQueue.main.async {
+                    print("Updating alertIdentifier to: \(message.contains("правильно") ? "resultCorrect" : "resultIncorrect")")
+                    if message.contains("правильно") {
+                        print("Correct solution detected")
+                        alertIdentifier = AlertIdentifier(id: .resultCorrect)
+                    } else {
+                        print("Incorrect solution detected")
+                        alertIdentifier = AlertIdentifier(id: .resultIncorrect)
+                    }
+                }
+            }
         }
         .padding()
-    }
+
+        .alert(item: $alertIdentifier) { alert in
+                    switch alert.id {
+                    case .warning:
+                        return Alert(
+                            title: Text("Предупреждение"),
+                            message: Text("После просмотра ответа баллы за решение не будут начислены."),
+                            primaryButton: .default(Text("Всё-равно посмотреть"), action: {
+                                isSolutionRevealed = true
+                                viewModel.fillWithSolution()
+                            }),
+                            secondaryButton: .default(Text("Продолжить решать самостоятельно"))
+                        )
+                    case .resultCorrect:
+                        return Alert(
+                            title: Text("Результат"),
+                            message: Text("Судоку решена правильно! Баллы начислены."),
+                            dismissButton: .default(Text("ОК"), action: {
+                                viewModel.startGame(difficulty: difficulty)
+                            })
+                        )
+                    case .resultIncorrect:
+                        return Alert(
+                            title: Text("Результат"),
+                            message: Text("Судоку решена неверно!"),
+                            primaryButton: .default(Text("Показать ответ"), action: {
+                                viewModel.fillWithSolution()
+                                isSolutionRevealed = true
+                            }),
+                            secondaryButton: .default(Text("Продолжить"))
+                        )
+                    }
+                }
+            }
     
     private func numberButtons() -> some View {
         VStack(spacing: 4) {
@@ -138,26 +201,6 @@ struct SudokuGameView: View {
         }
     }
 }
-
-//extension SudokuGameView {
-//    func finishSudoku(isSolved: Bool) {
-//        if isSolved {
-//            authViewModel.updatePoints(for: difficulty, isSolved: true)
-//            showAlert(title: "Congratulations!", message: "You solved the sudoku and earned points.")
-//        } else {
-//            showAlert(title: "Hint Used", message: "Points are not awarded if the answer is shown.")
-//        }
-//    }
-//    
-//    func showAlert(title: String, message: String) {
-//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//           let rootViewController = windowScene.windows.first?.rootViewController {
-//            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "OK", style: .default))
-//            rootViewController.present(alert, animated: true)
-//        }
-//    }
-//}
 
 #Preview {
     SudokuGameView(difficulty: .easy, onBack: {})
