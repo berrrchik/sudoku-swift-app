@@ -2,22 +2,57 @@ import Foundation
 import SwiftUI
 
 struct DifficultySelectionView: View {
+    @ObservedObject var authViewModel: AuthViewModel
+    @State private var showProfile = false
     let onDifficultySelected: (Difficulty) -> Void
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
-                .multilineTextAlignment(.center)
-                .font(.title)
-                .padding()
+        VStack {
+            HStack {
+                Text("Привет, \(authViewModel.currentUser?.email ?? "Пользователь")")
+                    .font(.headline)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .padding(.leading)
+                
+                Spacer()
+                
+                Button("Профиль") {
+                    showProfile = true
+                }
+                .foregroundColor(.blue)
+                .padding(.trailing)
+            }
+
+            .padding(.vertical) 
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(8)
             
-            difficultyButton(titleKey: "easy.level", color: .green, difficulty: .easy)
-            difficultyButton(titleKey: "medium.level", color: .orange, difficulty: .medium)
-            difficultyButton(titleKey: "hard.level", color: .red, difficulty: .hard)
+            Spacer()
+            
+            VStack(spacing: 20) {
+                Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
+                    .multilineTextAlignment(.center)
+                    .font(.title)
+                    .padding()
+                
+                difficultyButton(titleKey: "easy.level", color: .green, difficulty: .easy)
+                difficultyButton(titleKey: "medium.level", color: .orange, difficulty: .medium)
+                difficultyButton(titleKey: "hard.level", color: .red, difficulty: .hard)
+            }
+            .frame(maxWidth: .infinity)
+            
+            Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.gray.opacity(0.1))
-        .ignoresSafeArea()
+        .padding()
+        .fullScreenCover(isPresented: $showProfile) {
+            ProfileView(authViewModel: authViewModel)
+        }
+        .onAppear {
+            if authViewModel.currentUser == nil {
+                authViewModel.checkCurrentUser()
+            }
+        }
     }
     
     private func difficultyButton(titleKey: String, color: Color, difficulty: Difficulty) -> some View {
@@ -33,6 +68,22 @@ struct DifficultySelectionView: View {
 }
 
 
+//#Preview {
+//    DifficultySelectionView(authViewModel: AuthViewModel(), onDifficultySelected: {_ in })
+//}
+
 #Preview {
-    DifficultySelectionView(onDifficultySelected: {_ in })
+    let mockAuthViewModel = AuthViewModel()
+    mockAuthViewModel.currentUser = UserModel(
+        id: "12345",
+        email: "test@example.com",
+        totalPoints: 100,
+        easySudokuSolved: 5,
+        mediumSudokuSolved: 3,
+        hardSudokuSolved: 2,
+        easyPoints: 50,
+        mediumPoints: 60,
+        hardPoints: 90
+    )
+    return DifficultySelectionView(authViewModel: mockAuthViewModel, onDifficultySelected: {_ in })
 }

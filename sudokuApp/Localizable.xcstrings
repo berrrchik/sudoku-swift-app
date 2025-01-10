@@ -1,6 +1,12 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%lld" : {
+
+    },
     "answer.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -69,6 +75,12 @@
         }
       }
     },
+    "Email" : {
+
+    },
+    "Email: %@" : {
+
+    },
     "go.back.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -120,6 +132,9 @@
         }
       }
     },
+    "Login" : {
+
+    },
     "medium.level" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -154,6 +169,12 @@
         }
       }
     },
+    "Password" : {
+
+    },
+    "Register" : {
+
+    },
     "start.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -187,6 +208,39 @@
           }
         }
       }
+    },
+    "Всего очков: %lld" : {
+
+    },
+    "Выйти" : {
+
+    },
+    "Ещё нет аккаунта? Зарегистрируйтесь" : {
+
+    },
+    "Очки за лёгкий уровень: %lld" : {
+
+    },
+    "Очки за средний уровень: %lld" : {
+
+    },
+    "Очки за тяжёлый уровень: %lld" : {
+
+    },
+    "Привет, %@" : {
+
+    },
+    "Профиль" : {
+
+    },
+    "Решено судоку (лёгкий): %lld" : {
+
+    },
+    "Решено судоку (средний): %lld" : {
+
+    },
+    "Решено судоку (тяжёлый): %lld" : {
+
     }
   },
   "version" : "1.0"

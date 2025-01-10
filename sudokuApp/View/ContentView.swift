@@ -1,19 +1,25 @@
 import SwiftUI
 
 enum AppScreen {
+    case login
     case difficultySelection
     case game(difficulty: Difficulty)
 }
 
 struct ContentView: View {
-    @State private var currentScreen: AppScreen = .difficultySelection
-    
+    @ObservedObject var authViewModel: AuthViewModel
+    @State private var currentScreen: AppScreen = .login
+
     var body: some View {
         NavigationView {
             VStack {
                 switch currentScreen {
+                case .login:
+                    LoginView {
+                        currentScreen = .difficultySelection
+                    }
                 case .difficultySelection:
-                    DifficultySelectionView { selectedDifficulty in
+                    DifficultySelectionView(authViewModel: authViewModel) { selectedDifficulty in
                         currentScreen = .game(difficulty: selectedDifficulty)
                     }
                 case .game(let difficulty):
@@ -23,10 +29,19 @@ struct ContentView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear {
+                
+                if authViewModel.currentUser == nil {
+                    currentScreen = .login
+                } else {
+                    currentScreen = .difficultySelection
+                }
+            }
         }
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(authViewModel: AuthViewModel())
 }
+

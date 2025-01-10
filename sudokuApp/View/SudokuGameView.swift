@@ -34,6 +34,7 @@ extension View {
 
 
 struct SudokuGameView: View {
+    @StateObject private var authViewModel = AuthViewModel()
     let difficulty: Difficulty
     @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
@@ -137,6 +138,26 @@ struct SudokuGameView: View {
         }
     }
 }
+
+//extension SudokuGameView {
+//    func finishSudoku(isSolved: Bool) {
+//        if isSolved {
+//            authViewModel.updatePoints(for: difficulty, isSolved: true)
+//            showAlert(title: "Congratulations!", message: "You solved the sudoku and earned points.")
+//        } else {
+//            showAlert(title: "Hint Used", message: "Points are not awarded if the answer is shown.")
+//        }
+//    }
+//    
+//    func showAlert(title: String, message: String) {
+//        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+//           let rootViewController = windowScene.windows.first?.rootViewController {
+//            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "OK", style: .default))
+//            rootViewController.present(alert, animated: true)
+//        }
+//    }
+//}
 
 #Preview {
     SudokuGameView(difficulty: .easy, onBack: {})

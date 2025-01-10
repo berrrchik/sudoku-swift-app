@@ -22,6 +22,16 @@
 		578571452D2DD25E00917F88 /* DifficultySelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571442D2DD25E00917F88 /* DifficultySelectionView.swift */; };
 		578571472D2DD27400917F88 /* SudokuGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571462D2DD27400917F88 /* SudokuGameView.swift */; };
 		5785714D2D300DD200917F88 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 5785714C2D300DD200917F88 /* Localizable.xcstrings */; };
+		5785714F2D30219100917F88 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5785714E2D30219000917F88 /* GoogleService-Info.plist */; };
+		578571522D30234A00917F88 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 578571512D30234A00917F88 /* FirebaseAnalytics */; };
+		578571542D302A1B00917F88 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571532D302A1B00917F88 /* LoginView.swift */; };
+		578571562D302A2C00917F88 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571552D302A2C00917F88 /* RegistrationView.swift */; };
+		578571582D302A4200917F88 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 578571572D302A4200917F88 /* ProfileView.swift */; };
+		5785715B2D302A7500917F88 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785715A2D302A7500917F88 /* AuthViewModel.swift */; };
+		5785715F2D302A8F00917F88 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5785715E2D302A8F00917F88 /* UserModel.swift */; };
+		57AB745C2D30312800FF7A05 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 57AB745B2D30312800FF7A05 /* FirebaseAuth */; };
+		57AB745E2D30313300FF7A05 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 57AB745D2D30313300FF7A05 /* FirebaseFirestore */; };
+		57AB74602D30936300FF7A05 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 57AB745F2D30936300FF7A05 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +70,13 @@
 		578571442D2DD25E00917F88 /* DifficultySelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultySelectionView.swift; sourceTree = "<group>"; };
 		578571462D2DD27400917F88 /* SudokuGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGameView.swift; sourceTree = "<group>"; };
 		5785714C2D300DD200917F88 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		5785714E2D30219000917F88 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		578571532D302A1B00917F88 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		578571552D302A2C00917F88 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		578571572D302A4200917F88 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5785715A2D302A7500917F88 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		5785715E2D302A8F00917F88 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		57AB745F2D30936300FF7A05 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				578571522D30234A00917F88 /* FirebaseAnalytics in Frameworks */,
+				57AB745C2D30312800FF7A05 /* FirebaseAuth in Frameworks */,
+				57AB745E2D30313300FF7A05 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +114,7 @@
 				5785711E2D28678800917F88 /* sudokuAppTests */,
 				578571282D28678800917F88 /* sudokuAppUITests */,
 				5785710C2D28678700917F88 /* Products */,
+				57AB745A2D30312800FF7A05 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,12 +131,15 @@
 		5785710D2D28678700917F88 /* sudokuApp */ = {
 			isa = PBXGroup;
 			children = (
+				578571592D302A5700917F88 /* ViewModel */,
 				578571492D2EADC900917F88 /* View */,
 				578571482D2EADBA00917F88 /* Model */,
 				5785710E2D28678700917F88 /* sudokuAppApp.swift */,
 				578571122D28678800917F88 /* Assets.xcassets */,
 				578571142D28678800917F88 /* Preview Content */,
 				5785714C2D300DD200917F88 /* Localizable.xcstrings */,
+				5785714E2D30219000917F88 /* GoogleService-Info.plist */,
+				57AB745F2D30936300FF7A05 /* .gitignore */,
 			);
 			path = sudokuApp;
 			sourceTree = "<group>";
@@ -148,7 +172,7 @@
 		578571482D2EADBA00917F88 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5785713C2D286D2E00917F88 /* SudokuViewModel.swift */,
+				5785715E2D302A8F00917F88 /* UserModel.swift */,
 				5785713E2D286D7300917F88 /* SudokuModel.swift */,
 				578571422D2DAE3C00917F88 /* SudokuGenerator.swift */,
 			);
@@ -163,8 +187,27 @@
 				5785713A2D286D0200917F88 /* SudokuGridView.swift */,
 				578571402D2C615000917F88 /* SudokuCellView.swift */,
 				578571102D28678700917F88 /* ContentView.swift */,
+				578571532D302A1B00917F88 /* LoginView.swift */,
+				578571552D302A2C00917F88 /* RegistrationView.swift */,
+				578571572D302A4200917F88 /* ProfileView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		578571592D302A5700917F88 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5785713C2D286D2E00917F88 /* SudokuViewModel.swift */,
+				5785715A2D302A7500917F88 /* AuthViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		57AB745A2D30312800FF7A05 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +226,11 @@
 			dependencies = (
 			);
 			name = sudokuApp;
+			packageProductDependencies = (
+				578571512D30234A00917F88 /* FirebaseAnalytics */,
+				57AB745B2D30312800FF7A05 /* FirebaseAuth */,
+				57AB745D2D30313300FF7A05 /* FirebaseFirestore */,
+			);
 			productName = sudokuApp;
 			productReference = 5785710B2D28678700917F88 /* sudokuApp.app */;
 			productType = "com.apple.product-type.application";
@@ -256,6 +304,9 @@
 				ru,
 			);
 			mainGroup = 578571022D28678700917F88;
+			packageReferences = (
+				578571502D30234A00917F88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 5785710C2D28678700917F88 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -272,7 +323,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57AB74602D30936300FF7A05 /* .gitignore in Resources */,
 				578571162D28678800917F88 /* Preview Assets.xcassets in Resources */,
+				5785714F2D30219100917F88 /* GoogleService-Info.plist in Resources */,
 				578571132D28678800917F88 /* Assets.xcassets in Resources */,
 				5785714D2D300DD200917F88 /* Localizable.xcstrings in Resources */,
 			);
@@ -299,14 +352,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				578571562D302A2C00917F88 /* RegistrationView.swift in Sources */,
 				5785713F2D286D7300917F88 /* SudokuModel.swift in Sources */,
 				578571412D2C615000917F88 /* SudokuCellView.swift in Sources */,
 				5785713B2D286D0200917F88 /* SudokuGridView.swift in Sources */,
+				578571582D302A4200917F88 /* ProfileView.swift in Sources */,
 				578571112D28678700917F88 /* ContentView.swift in Sources */,
 				578571472D2DD27400917F88 /* SudokuGameView.swift in Sources */,
 				578571452D2DD25E00917F88 /* DifficultySelectionView.swift in Sources */,
 				5785710F2D28678700917F88 /* sudokuAppApp.swift in Sources */,
 				578571432D2DAE3C00917F88 /* SudokuGenerator.swift in Sources */,
+				578571542D302A1B00917F88 /* LoginView.swift in Sources */,
+				5785715B2D302A7500917F88 /* AuthViewModel.swift in Sources */,
+				5785715F2D302A8F00917F88 /* UserModel.swift in Sources */,
 				5785713D2D286D2E00917F88 /* SudokuViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -639,6 +697,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		578571502D30234A00917F88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		578571512D30234A00917F88 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 578571502D30234A00917F88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		57AB745B2D30312800FF7A05 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 578571502D30234A00917F88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		57AB745D2D30313300FF7A05 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 578571502D30234A00917F88 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 578571032D28678700917F88 /* Project object */;
 }
