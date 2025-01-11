@@ -79,7 +79,9 @@ struct SudokuGameView: View {
                 notes: $viewModel.notes,
                 fixedCells: viewModel.fixedCells,
                 selectedCell: $selectedCell,
-                incorrectCells: viewModel.incorrectCells
+                incorrectCells: viewModel.incorrectCells,
+                isGameStarted: viewModel.isGameStarted,
+                isSolutionRevealed: isSolutionRevealed
 //                isChecked: viewModel.isChecked
             )
             .padding()
@@ -159,6 +161,7 @@ struct SudokuGameView: View {
                             primaryButton: .default(Text("Всё-равно посмотреть"), action: {
                                 viewModel.fillWithSolution()
                                 isSolutionRevealed = true
+                                selectedCell = nil
                             }),
                             secondaryButton: .default(Text("Продолжить решать самостоятельно"))
                         )
@@ -167,7 +170,8 @@ struct SudokuGameView: View {
                             title: Text("Результат"),
                             message: Text("Судоку решена правильно! Баллы начислены."),
                             dismissButton: .default(Text("ОК"), action: {
-                                viewModel.startGame(difficulty: difficulty)
+//                                viewModel.startGame(difficulty: difficulty)
+                                viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
                             })
                         )
                     case .resultIncorrect:

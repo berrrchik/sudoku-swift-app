@@ -5,9 +5,11 @@ struct SudokuGridView: View {
     @Binding var notes: [[Set<Int>]]
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
-    let incorrectCells: Set<SudokuCoordinate> // Новое свойство
+    let incorrectCells: Set<SudokuCoordinate>
 //    let isChecked: Bool
-
+    let isGameStarted: Bool 
+    let isSolutionRevealed: Bool
+    
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0..<9, id: \.self) { row in
@@ -25,7 +27,12 @@ struct SudokuGridView: View {
                             borderWidths: getBorderWidths(row: row, col: col),
                             notes: notes[row][col]
                         )
-                        .onTapGesture { selectedCell = coordinate }
+                        .onTapGesture {
+                            if isGameStarted && !isSolutionRevealed {
+                                selectedCell = coordinate
+                            }
+                        }
+                        .allowsHitTesting(isGameStarted && !isSolutionRevealed)
                     }
                 }
             }
@@ -81,7 +88,9 @@ struct SudokuGridView: View {
             SudokuCoordinate(row: 1, col: 5)
         ]),
         selectedCell: .constant(SudokuCoordinate(row: 3, col: 4)),
-        incorrectCells: Set([SudokuCoordinate(row: 3, col: 4)])
+        incorrectCells: Set([SudokuCoordinate(row: 3, col: 4)]),
+        isGameStarted: true,
+        isSolutionRevealed: false
 //        isChecked: true
     )
 }
