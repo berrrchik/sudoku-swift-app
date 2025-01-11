@@ -35,12 +35,16 @@ class SudokuViewModel: ObservableObject {
         printGrid(solution)
     }
     
+    private func canModifyCell(at coordinate: SudokuCoordinate) -> Bool {
+        return isGameStarted && !fixedCells.contains(coordinate)
+    }
+
     func updateCell(row: Int, col: Int, value: Int) {
         guard isGameStarted else { return }
         print("Updating cell at (\(row), \(col)) with value \(value)")
         let coordinate = SudokuCoordinate(row: row, col: col)
-        guard !fixedCells.contains(coordinate) else { return }
-
+        guard canModifyCell(at: SudokuCoordinate(row: row, col: col)) else { return }
+        
         if isNoteMode {
             if notes[row][col].contains(value) {
                 notes[row][col].remove(value)
@@ -67,7 +71,7 @@ class SudokuViewModel: ObservableObject {
     }
 
     func isGridFilled() -> Bool {
-        return grid.allSatisfy { row in row.allSatisfy { $0 != 0 } }
+        return !grid.joined().contains(0)
     }
 
     func finishGame() {
@@ -98,16 +102,38 @@ class SudokuViewModel: ObservableObject {
         print("Incorrect cells: \(incorrectCells)")
     }
 
+//    func provideHint(for coordinate: SudokuCoordinate?) {
+//        guard isGameStarted, hintsUsed < 5 else { return }
+//        hintsUsed += 1
+//        guard let coordinate = coordinate, !fixedCells.contains(coordinate) else { return }
+//
+//        grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
+//        notes[coordinate.row][coordinate.col] = []
+//        fixedCells.insert(coordinate)
+//        incorrectCells.remove(coordinate)
+//        
+//        if isGridFilled() {
+//            print("Grid is filled. Finishing game.")
+//            finishGame()
+//        }
+//        
+//    }
     func provideHint(for coordinate: SudokuCoordinate?) {
-        guard isGameStarted, hintsUsed < 5 else { return }
+        guard isGameStarted, hintsUsed < 5, let coordinate = coordinate else { return }
         hintsUsed += 1
-        guard let coordinate = coordinate, !fixedCells.contains(coordinate) else { return }
-
+        guard canModifyCell(at: coordinate) else { return }
+        
         grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
         notes[coordinate.row][coordinate.col] = []
         fixedCells.insert(coordinate)
         incorrectCells.remove(coordinate)
+        
+        if isGridFilled() {
+            print("Grid is filled. Finishing game.")
+            finishGame()
+        }
     }
+
 
     func undoLastAction() {
         guard let lastState = history.popLast() else { return }
@@ -128,36 +154,51 @@ class SudokuViewModel: ObservableObject {
     }
 
     func isSolutionCorrect() -> Bool {
-        return grid == solution
+        return grid == solution && incorrectCells.isEmpty
     }
+
+//    func clearCell(row: Int, col: Int) {
+//        guard isGameStarted else { return }
+//        if isNoteMode {
+//            saveToHistory()
+//            notes[row][col] = []
+//        } else {
+//            guard !fixedCells.contains(SudokuCoordinate(row: row, col: col)) else { return }
+//            saveToHistory()
+//            grid[row][col] = 0
+//            notes[row][col] = []
+//        }
+//    }
 
     func clearCell(row: Int, col: Int) {
         guard isGameStarted else { return }
+        let coordinate = SudokuCoordinate(row: row, col: col)
+        guard canModifyCell(at: coordinate) else { return }
+        
+        saveToHistory()
         if isNoteMode {
-            saveToHistory()
             notes[row][col] = []
         } else {
-            guard !fixedCells.contains(SudokuCoordinate(row: row, col: col)) else { return }
-            saveToHistory()
             grid[row][col] = 0
             notes[row][col] = []
         }
     }
 
+//    private func saveToHistory() {
+//        history.append((grid, notes))
+//    }
+    
     private func saveToHistory() {
+        guard history.last?.0 != grid || history.last?.1 != notes else { return }
         history.append((grid, notes))
     }
 
     private func getFixedCells(from grid: [[Int]]) -> Set<SudokuCoordinate> {
-        var cells = Set<SudokuCoordinate>()
-        for (rowIndex, row) in grid.enumerated() {
-            for (colIndex, value) in row.enumerated() {
-                if value > 0 {
-                    cells.insert(SudokuCoordinate(row: rowIndex, col: colIndex))
-                }
+        return Set(grid.enumerated().flatMap { rowIndex, row in
+            row.enumerated().compactMap { colIndex, value in
+                value > 0 ? SudokuCoordinate(row: rowIndex, col: colIndex) : nil
             }
-        }
-        return cells
+        })
     }
 
     private func printGrid(_ grid: [[Int]]) {
@@ -169,8 +210,8 @@ class SudokuViewModel: ObservableObject {
     
     func toggleNoteMode(row: Int, col: Int) {
         let coordinate = SudokuCoordinate(row: row, col: col)
-        guard !fixedCells.contains(coordinate) else { return }
-        
+        guard canModifyCell(at: coordinate) else { return }
+
         if !isNoteMode && grid[row][col] != 0 {
             saveToHistory()
             notes[row][col] = [grid[row][col]]

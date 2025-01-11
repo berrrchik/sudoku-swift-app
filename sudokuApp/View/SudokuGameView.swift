@@ -157,8 +157,8 @@ struct SudokuGameView: View {
                             title: Text("Предупреждение"),
                             message: Text("После просмотра ответа баллы за решение не будут начислены."),
                             primaryButton: .default(Text("Всё-равно посмотреть"), action: {
-                                isSolutionRevealed = true
                                 viewModel.fillWithSolution()
+                                isSolutionRevealed = true
                             }),
                             secondaryButton: .default(Text("Продолжить решать самостоятельно"))
                         )

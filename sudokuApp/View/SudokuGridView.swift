@@ -1,10 +1,5 @@
 import SwiftUI
 
-struct SudokuCoordinate: Hashable {
-    let row: Int
-    let col: Int
-}
-
 struct SudokuGridView: View {
     @Binding var grid: [[Int]]
     @Binding var notes: [[Set<Int>]]
