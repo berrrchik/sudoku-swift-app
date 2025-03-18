@@ -13,33 +13,33 @@ struct LoginView: View {
     var body: some View {
         VStack(spacing: 30) {
             VStack(spacing: 10) {
-                Text("Добро пожаловать")
+                Text(NSLocalizedString("welcome", comment: "Welcome message"))
                     .font(.system(size: 32, weight: .bold))
-                Text("Войдите в свой аккаунт")
+                Text(NSLocalizedString("login.account", comment: "Login to your account"))
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
             }
             .padding(.top, 60)
-            
+
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Email")
+                    Text(NSLocalizedString("email", comment: "Email label"))
                         .foregroundColor(.gray)
-                    TextField("Введите email", text: $email)
+                    TextField(NSLocalizedString("enter.email", comment: "Enter email placeholder"), text: $email)
                         .textFieldStyle(CustomTextFieldStyle())
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Пароль")
+                    Text(NSLocalizedString("password", comment: "Password label"))
                         .foregroundColor(.gray)
-                    SecureField("Введите пароль", text: $password)
+                    SecureField(NSLocalizedString("enter.password", comment: "Enter password placeholder"), text: $password)
                         .textFieldStyle(CustomTextFieldStyle())
                 }
             }
-            
-            Button("Войти") {
+
+            Button(NSLocalizedString("login", comment: "Login button")) {
                 authViewModel.login(email: email, password: password) { error in
                     if let error = error {
                         errorMessage = error.localizedDescription
@@ -61,7 +61,7 @@ struct LoginView: View {
 
             Spacer()
 
-            Button("Ещё нет аккаунта? Зарегистрируйтесь") {
+            Button(NSLocalizedString("no.account.register", comment: "No account? Register")) {
                 showRegistration = true
             }
             .foregroundColor(.blue)
@@ -76,7 +76,6 @@ struct LoginView: View {
         }
     }
 }
-
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
