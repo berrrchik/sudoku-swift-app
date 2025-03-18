@@ -7,6 +7,23 @@
     "%lld" : {
 
     },
+    "advanced.level.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для экспертов"
+          }
+        }
+      }
+    },
     "answer.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -20,6 +37,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ответ"
+          }
+        }
+      }
+    },
+    "beginner.level.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beginner level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для начинающих"
           }
         }
       }
@@ -98,6 +132,23 @@
         }
       }
     },
+    "greeting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет, %@"
+          }
+        }
+      }
+    },
     "hard.level" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -110,7 +161,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тяжёлый"
+            "value" : "Сложный"
           }
         }
       }
@@ -132,8 +183,22 @@
         }
       }
     },
-    "Login" : {
-
+    "intermediate.level.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intermediate level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Для опытных"
+          }
+        }
+      }
     },
     "medium.level" : {
       "extractionState" : "manual",
@@ -172,6 +237,40 @@
     "Password" : {
 
     },
+    "player.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Player"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Игрок"
+          }
+        }
+      }
+    },
+    "profile.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Профиль"
+          }
+        }
+      }
+    },
     "Register" : {
 
     },
@@ -188,6 +287,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Начать"
+          }
+        }
+      }
+    },
+    "sudoku.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sudoku"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Судоку"
           }
         }
       }
@@ -209,6 +325,18 @@
         }
       }
     },
+    "Введите email" : {
+
+    },
+    "Введите пароль" : {
+
+    },
+    "Войдите в свой аккаунт" : {
+
+    },
+    "Войти" : {
+
+    },
     "Всё-равно посмотреть" : {
 
     },
@@ -216,6 +344,9 @@
 
     },
     "Выйти" : {
+
+    },
+    "Добро пожаловать" : {
 
     },
     "Ещё нет аккаунта? Зарегистрируйтесь" : {
@@ -234,6 +365,9 @@
 
     },
     "Очки за тяжёлый уровень: %lld" : {
+
+    },
+    "Пароль" : {
 
     },
     "Показать ответ" : {

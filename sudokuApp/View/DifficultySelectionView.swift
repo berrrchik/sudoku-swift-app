@@ -9,7 +9,8 @@ struct DifficultySelectionView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                Text("Привет, \(authViewModel.currentUser?.email ?? "Игрок")")
+                let player = NSLocalizedString("player.text", comment: "Default player name")
+                Text(String(format: NSLocalizedString("greeting", comment: "Greeting message"), authViewModel.currentUser?.email ?? player))
                     .font(.system(size: 18, weight: .medium))
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -21,7 +22,7 @@ struct DifficultySelectionView: View {
                     showProfile = true
                 } label: {
                     HStack(spacing: 4) {
-                        Text("Профиль")
+                        Text(NSLocalizedString("profile.button", comment: "Profile button"))
                             .font(.system(size: 18, weight: .medium))
                         Image(systemName: "person.circle")
                             .font(.system(size: 20))
@@ -38,7 +39,7 @@ struct DifficultySelectionView: View {
             VStack(spacing: 40) {
                 
                 VStack(spacing: 8) {
-                    Text("Судоку")
+                    Text(NSLocalizedString("sudoku.text", comment: "Sudoku text"))
                         .font(.system(size: 40, weight: .bold))
                     Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
                         .font(.system(size: 22))
@@ -49,21 +50,21 @@ struct DifficultySelectionView: View {
                 VStack(spacing: 20) {
                         difficultyButton(
                             titleKey: "easy.level",
-                            subtitle: "Для начинающих",
-                            color: .green, 
+                            subtitle: "beginner.level.subtitle",
+                            color: .green,
                             difficulty: .easy
                         )
                     
                     difficultyButton(
                         titleKey: "medium.level",
-                        subtitle: "Для опытных",
+                        subtitle: "intermediate.level.subtitle",
                         color: .orange,
                         difficulty: .easy
                     )
                     
                     difficultyButton(
                         titleKey: "hard.level",
-                        subtitle: "Для экспертов",
+                        subtitle: "advanced.level.subtitle",
                         color: .red,
                         difficulty: .easy
                     )
@@ -89,7 +90,7 @@ struct DifficultySelectionView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(NSLocalizedString(titleKey, comment: "Difficulty level"))
                     .font(.system(size: 28, weight: .bold))
-                Text(subtitle)
+                Text(NSLocalizedString(subtitle, comment: "Difficulty level subtitle"))
                     .font(.system(size: 18))
                     .opacity(1)
             }
