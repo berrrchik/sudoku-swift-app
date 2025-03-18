@@ -24,6 +24,23 @@
         }
       }
     },
+    "already.have.account" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already have an account? Login"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже есть аккаунт? Войдите"
+          }
+        }
+      }
+    },
     "answer.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -71,6 +88,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выберите уровень сложности"
+          }
+        }
+      }
+    },
+    "create.account" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Account"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создание аккаунта"
           }
         }
       }
@@ -162,6 +196,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Введите пароль"
+          }
+        }
+      }
+    },
+    "fill.registration.details" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fill in your details to register"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заполните данные для регистрации"
           }
         }
       }
@@ -386,6 +437,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Профиль"
+          }
+        }
+      }
+    },
+    "register" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зарегистрироваться"
           }
         }
       }

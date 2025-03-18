@@ -1,5 +1,4 @@
 import Foundation
-
 import SwiftUI
 
 struct RegistrationView: View {
@@ -12,34 +11,33 @@ struct RegistrationView: View {
 
     var body: some View {
         VStack(spacing: 30) {
-            
             VStack(spacing: 10) {
-                Text("Создание аккаунта")
+                Text(NSLocalizedString("create.account", comment: "Create account title"))
                     .font(.system(size: 32, weight: .bold))
-                Text("Заполните данные для регистрации")
+                Text(NSLocalizedString("fill.registration.details", comment: "Fill registration details"))
                     .font(.system(size: 18))
                     .foregroundColor(.gray)
             }
             .padding(.top, 60)
-            
+
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Email")
+                    Text(NSLocalizedString("email", comment: "Email label"))
                         .foregroundColor(.gray)
-                    TextField("Введите email", text: $email)
+                    TextField(NSLocalizedString("enter.email", comment: "Enter email placeholder"), text: $email)
                         .textFieldStyle(CustomTextFieldStyle())
                         .autocapitalization(.none)
                 }
-                
+
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Пароль")
+                    Text(NSLocalizedString("password", comment: "Password label"))
                         .foregroundColor(.gray)
-                    SecureField("Введите пароль", text: $password)
+                    SecureField(NSLocalizedString("enter.password", comment: "Enter password placeholder"), text: $password)
                         .textFieldStyle(CustomTextFieldStyle())
                 }
             }
-            
-            Button("Зарегистрироваться") {
+
+            Button(NSLocalizedString("register", comment: "Register button")) {
                 authViewModel.register(email: email, password: password) { error in
                     if let error = error {
                         errorMessage = error.localizedDescription
@@ -54,18 +52,17 @@ struct RegistrationView: View {
             .padding()
             .background(Color.blue)
             .cornerRadius(12)
-            
+
             Text(errorMessage)
                 .foregroundColor(.red)
-            
+
             Spacer()
-            
-            Button("Уже есть акккаунт? Войдите") {
+
+            Button(NSLocalizedString("already.have.account", comment: "Already have an account? Login")) {
                 showLogin = true
             }
             .foregroundColor(.blue)
             .padding(.bottom, 30)
-            
         }
         .padding()
         .fullScreenCover(isPresented: $showLogin) {
