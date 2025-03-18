@@ -7,44 +7,73 @@ struct DifficultySelectionView: View {
     let onDifficultySelected: (Difficulty) -> Void
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                Text("Привет, \(authViewModel.currentUser?.email ?? "Пользователь")")
-                    .font(.headline)
+                Text("Привет, \(authViewModel.currentUser?.email ?? "Игрок")")
+                    .font(.system(size: 18, weight: .medium))
                     .lineLimit(1)
                     .truncationMode(.tail)
                     .padding(.leading)
                 
                 Spacer()
                 
-                Button("Профиль") {
+                Button {
                     showProfile = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("Профиль")
+                            .font(.system(size: 18, weight: .medium))
+                        Image(systemName: "person.circle")
+                            .font(.system(size: 20))
+                    }
+                    .foregroundColor(.blue)
                 }
-                .foregroundColor(.blue)
                 .padding(.trailing)
-            }
-
-            .padding(.vertical) 
-            .background(Color.gray.opacity(0.2))
-            .cornerRadius(8)
-            
-            Spacer()
-            
-            VStack(spacing: 20) {
-                Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
-                    .multilineTextAlignment(.center)
-                    .font(.title)
-                    .padding()
                 
-                difficultyButton(titleKey: "easy.level", color: .green, difficulty: .easy)
-                difficultyButton(titleKey: "medium.level", color: .orange, difficulty: .medium)
-                difficultyButton(titleKey: "hard.level", color: .red, difficulty: .hard)
             }
+            .padding(.vertical)
             .frame(maxWidth: .infinity)
+            .background(Color.gray.opacity(0.1))
+                        
+            VStack(spacing: 40) {
+                
+                VStack(spacing: 8) {
+                    Text("Судоку")
+                        .font(.system(size: 40, weight: .bold))
+                    Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
+                        .font(.system(size: 22))
+                        .foregroundColor(.gray)
+                }
+                .padding(.top, 60)
+                
+                VStack(spacing: 20) {
+                        difficultyButton(
+                            titleKey: "easy.level",
+                            subtitle: "Для начинающих",
+                            color: .green, 
+                            difficulty: .easy
+                        )
+                    
+                    difficultyButton(
+                        titleKey: "medium.level",
+                        subtitle: "Для опытных",
+                        color: .orange,
+                        difficulty: .easy
+                    )
+                    
+                    difficultyButton(
+                        titleKey: "hard.level",
+                        subtitle: "Для экспертов",
+                        color: .red,
+                        difficulty: .easy
+                    )
+                }
+            }
+            .padding()
             
             Spacer()
         }
-        .padding()
+        
         .fullScreenCover(isPresented: $showProfile) {
             ProfileView(authViewModel: authViewModel)
         }
@@ -55,15 +84,29 @@ struct DifficultySelectionView: View {
         }
     }
     
-    private func difficultyButton(titleKey: String, color: Color, difficulty: Difficulty) -> some View {
-        Button(NSLocalizedString(titleKey, comment: "Difficulty level")) {
-            onDifficultySelected(difficulty)
+    private func difficultyButton(titleKey: String, subtitle: String, color: Color, difficulty: Difficulty) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(NSLocalizedString(titleKey, comment: "Difficulty level"))
+                    .font(.system(size: 28, weight: .bold))
+                Text(subtitle)
+                    .font(.system(size: 18))
+                    .opacity(1)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.system(size: 20, weight: .semibold))
         }
-        .frame(width: 150, height: 80)
-        .background(color)
-        .foregroundColor(.white)
-        .cornerRadius(8)
-        .font(.system(size: 25).bold())
+        .padding(.horizontal, 25)
+        .padding(.vertical, 20)
+        .frame(maxWidth: .infinity)
+        .background(color.opacity(0.1))
+        .foregroundColor(color)
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(color.opacity(0.5), lineWidth: 1)
+        )
     }
 }
 
