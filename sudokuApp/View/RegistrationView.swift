@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 struct RegistrationView: View {
-    @StateObject private var authViewModel = AuthViewModel()
+    @ObservedObject var authViewModel: AuthViewModel
     @State private var email = ""
     @State private var password = ""
     @State private var errorMessage = ""
@@ -57,22 +57,18 @@ struct RegistrationView: View {
                 .foregroundColor(.red)
 
             Spacer()
-
-            Button(NSLocalizedString("already.have.account", comment: "Already have an account? Login")) {
-                showLogin = true
-            }
-            .foregroundColor(.blue)
-            .padding(.bottom, 30)
+            
+            NavigationLink(NSLocalizedString("already.have.account", comment: "Already have an account? Login"), destination: LoginView(authViewModel: authViewModel))
+                .navigationBarBackButtonHidden(true)
+                .foregroundColor(.blue)
+                .padding(.bottom, 30)
         }
         .padding()
-        .fullScreenCover(isPresented: $showLogin) {
-            LoginView(onLoginSuccess: {})
-        }
     }
 }
 
 struct RegistrationView_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrationView()
+        RegistrationView(authViewModel: AuthViewModel())
     }
 }

@@ -46,16 +46,17 @@ struct SudokuGameView: View {
     @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
     @State private var isSolutionRevealed = false
-    let onBack: () -> Void
     
     @State private var alertIdentifier: AlertIdentifier?
 //    @Published var incorrectCells: Set<SudokuCoordinate> = []
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack(spacing: -15) {
             HStack(spacing: 15) {
+                
                 buttonStyle(systemImage: "arrow.uturn.backward", subtitleKey: "go.back.button.subtitle", background: .blue) {
-                    onBack()
+                    presentationMode.wrappedValue.dismiss()
                 }
                 Spacer()
                 buttonStyle(systemImage: "play", subtitleKey: "start.button.subtitle", background: .green) {
@@ -151,7 +152,7 @@ struct SudokuGameView: View {
             }
         }
         .padding()
-
+        .navigationBarBackButtonHidden(true)
         .alert(item: $alertIdentifier) { alert in
                     switch alert.id {
                     case .warning:
@@ -207,5 +208,5 @@ struct SudokuGameView: View {
 }
 
 #Preview {
-    SudokuGameView(difficulty: .easy, onBack: {})
+    SudokuGameView(difficulty: .medium)
 }

@@ -37,13 +37,17 @@ struct ProfileView: View {
             
             Spacer()
             
-            Button("Выйти") {
-                authViewModel.logout()
-                presentationMode.wrappedValue.dismiss()
+            NavigationLink(destination: LoginView(authViewModel: AuthViewModel())) {
+                Text("Выйти")
+                    .foregroundColor(.red)
+                    .padding()
             }
-            .foregroundColor(.red)
+            .simultaneousGesture(TapGesture().onEnded {
+                authViewModel.logout()
+            })
         }
         .padding()
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             if authViewModel.currentUser == nil {
                 authViewModel.checkCurrentUser()

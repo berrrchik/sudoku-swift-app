@@ -1,91 +1,83 @@
-import Foundation
 import SwiftUI
 
 struct DifficultySelectionView: View {
     @ObservedObject var authViewModel: AuthViewModel
     @State private var showProfile = false
-    let onDifficultySelected: (Difficulty) -> Void
+    @State private var path: [Difficulty] = []
     
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                let player = NSLocalizedString("player.text", comment: "Default player name")
-                Text(String(format: NSLocalizedString("greeting", comment: "Greeting message"), authViewModel.currentUser?.email ?? player))
-                    .font(.system(size: 18, weight: .medium))
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .padding(.leading)
-                
-                Spacer()
-                
-                Button {
-                    showProfile = true
-                } label: {
-                    HStack(spacing: 4) {
-                        Text(NSLocalizedString("profile.button", comment: "Profile button"))
-                            .font(.system(size: 18, weight: .medium))
-                        Image(systemName: "person.circle")
-                            .font(.system(size: 20))
+        NavigationStack(path: $path) {
+            VStack(spacing: 0) {
+                HStack {
+                    let player = NSLocalizedString("player.text", comment: "Default player name")
+                    Text(String(format: NSLocalizedString("greeting", comment: "Greeting message"), authViewModel.currentUser?.email ?? player))
+                        .font(.system(size: 18, weight: .medium))
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .padding(.leading)
+                    
+                    Spacer()
+                    
+                    NavigationLink(destination: ProfileView(authViewModel: authViewModel)) {
+                        HStack(spacing: 4) {
+                            Text(NSLocalizedString("profile.button", comment: "Profile button"))
+                                .font(.system(size: 18, weight: .medium))
+                            Image(systemName: "person.circle")
+                                .font(.system(size: 20))
+                        }
+                        .foregroundColor(.blue)
                     }
-                    .foregroundColor(.blue)
+                    .padding(.trailing)
                 }
-                .padding(.trailing)
-                
-            }
-            .padding(.vertical)
-            .frame(maxWidth: .infinity)
-            .background(Color.gray.opacity(0.1))
-                        
-            VStack(spacing: 40) {
-                
-                VStack(spacing: 8) {
-                    Text(NSLocalizedString("sudoku.text", comment: "Sudoku text"))
-                        .font(.system(size: 40, weight: .bold))
-                    Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
-                        .font(.system(size: 22))
-                        .foregroundColor(.gray)
-                }
-                .padding(.top, 60)
-                
-                VStack(spacing: 20) {
-                        difficultyButton(
-                            titleKey: "easy.level",
-                            subtitle: "beginner.level.subtitle",
-                            color: .green,
-                            difficulty: .easy
-                        )
+                .padding(.vertical)
+                .frame(maxWidth: .infinity)
+                .background(Color.gray.opacity(0.1))
+
+                VStack(spacing: 40) {
+                    VStack(spacing: 8) {
+                        Text(NSLocalizedString("sudoku.text", comment: "Sudoku text"))
+                            .font(.system(size: 40, weight: .bold))
+                        Text(NSLocalizedString("choose.level", comment: "Choose difficulty level"))
+                            .font(.system(size: 22))
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.top, 60)
                     
-                    difficultyButton(
-                        titleKey: "medium.level",
-                        subtitle: "intermediate.level.subtitle",
-                        color: .orange,
-                        difficulty: .easy
-                    )
-                    
-                    difficultyButton(
-                        titleKey: "hard.level",
-                        subtitle: "advanced.level.subtitle",
-                        color: .red,
-                        difficulty: .easy
-                    )
+                    VStack(spacing: 20) {
+                        NavigationLink(value: Difficulty.easy) {
+                            difficultyButton(
+                                titleKey: "easy.level",
+                                subtitle: "beginner.level.subtitle",
+                                color: .green
+                            )
+                        }
+                        NavigationLink(value: Difficulty.medium) {
+                            difficultyButton(
+                                titleKey: "medium.level",
+                                subtitle: "intermediate.level.subtitle",
+                                color: .orange
+                            )
+                        }
+                        NavigationLink(value: Difficulty.hard) {
+                            difficultyButton(
+                                titleKey: "hard.level",
+                                subtitle: "advanced.level.subtitle",
+                                color: .red
+                            )
+                        }
+                    }
                 }
+                .padding()
+                Spacer()
             }
-            .padding()
-            
-            Spacer()
-        }
-        
-        .fullScreenCover(isPresented: $showProfile) {
-            ProfileView(authViewModel: authViewModel)
-        }
-        .onAppear {
-            if authViewModel.currentUser == nil {
-                authViewModel.checkCurrentUser()
+            .navigationBarBackButtonHidden(true)
+            .navigationDestination(for: Difficulty.self) { difficulty in
+                SudokuGameView(difficulty: difficulty)
             }
         }
     }
     
-    private func difficultyButton(titleKey: String, subtitle: String, color: Color, difficulty: Difficulty) -> some View {
+    private func difficultyButton(titleKey: String, subtitle: String, color: Color) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(NSLocalizedString(titleKey, comment: "Difficulty level"))
@@ -111,11 +103,6 @@ struct DifficultySelectionView: View {
     }
 }
 
-
-//#Preview {
-//    DifficultySelectionView(authViewModel: AuthViewModel(), onDifficultySelected: {_ in })
-//}
-
 #Preview {
     let mockAuthViewModel = AuthViewModel()
     mockAuthViewModel.currentUser = UserModel(
@@ -129,5 +116,5 @@ struct DifficultySelectionView: View {
         mediumPoints: 60,
         hardPoints: 90
     )
-    return DifficultySelectionView(authViewModel: mockAuthViewModel, onDifficultySelected: {_ in })
+    return DifficultySelectionView(authViewModel: mockAuthViewModel)
 }
