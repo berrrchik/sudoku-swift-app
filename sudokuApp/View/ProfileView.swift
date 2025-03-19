@@ -3,64 +3,122 @@ import SwiftUI
 
 struct ProfileView: View {
     @ObservedObject var authViewModel: AuthViewModel
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    presentationMode.wrappedValue.dismiss()
+                    dismiss()
                 }) {
-                    HStack {
-                        Image(systemName: "arrow.left")
-                        Text("Назад")
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("Вернуться")
                     }
+                    .foregroundColor(.blue)
+                    .font(.system(size: 20, weight: .medium))
                 }
-                .foregroundColor(.blue)
-                .padding()
                 
                 Spacer()
+                
+                Button(action: {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let window = windowScene.windows.first {
+                        window.rootViewController = UIHostingController(rootView: LoginView(authViewModel: AuthViewModel()))
+                    }
+                }) {
+                    Text("Выйти")
+                        .foregroundColor(.red)
+                        .font(.system(size: 20, weight: .medium))
+                }
             }
-
-            Text("Профиль")
-                .font(.largeTitle)
-                .padding()
+            .padding()
+            .background(Color.gray.opacity(0.1))
             
-            Text("Email: \(authViewModel.currentUser?.email ?? "—")")
-            Text("Всего очков: \(authViewModel.currentUser?.totalPoints ?? 0)")
-            Text("Решено судоку (лёгкий): \(authViewModel.currentUser?.easySudokuSolved ?? 0)")
-            Text("Очки за лёгкий уровень: \(authViewModel.currentUser?.easyPoints ?? 0)")
-            Text("Решено судоку (средний): \(authViewModel.currentUser?.mediumSudokuSolved ?? 0)")
-            Text("Очки за средний уровень: \(authViewModel.currentUser?.mediumSudokuSolved ?? 0)")
-            Text("Решено судоку (тяжёлый): \(authViewModel.currentUser?.hardSudokuSolved ?? 0)")
-            Text("Очки за тяжёлый уровень: \(authViewModel.currentUser?.hardPoints ?? 0)")
-            
-            Spacer()
-            
-            NavigationLink(destination: LoginView(authViewModel: AuthViewModel())) {
-                Text("Выйти")
-                    .foregroundColor(.red)
-                    .padding()
+            ScrollView {
+                VStack(spacing: 0) {
+                    VStack(spacing: 8) {
+                        Image(systemName: "person.circle.fill")
+                            .font(.system(size: 80))
+                            .foregroundColor(.blue)
+                        
+                        Text(authViewModel.currentUser?.email ?? "Игрок")
+                            .font(.system(size: 24, weight: .bold))
+                        
+                        Text("Общий счёт: \(authViewModel.currentUser?.totalPoints ?? 0)")
+                            .font(.system(size: 20))
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.vertical, 30)
+                    
+                    VStack(spacing: 20) {
+                        statisticCard(
+                            title: "Лёгкий уровень",
+                            solved: authViewModel.currentUser?.easySudokuSolved ?? 0,
+                            points: authViewModel.currentUser?.easyPoints ?? 0,
+                            color: .green
+                        )
+                        
+                        statisticCard(
+                            title: "Средний уровень",
+                            solved: authViewModel.currentUser?.mediumSudokuSolved ?? 0,
+                            points: authViewModel.currentUser?.mediumPoints ?? 0,
+                            color: .orange
+                        )
+                        
+                        statisticCard(
+                            title: "Сложный уровень",
+                            solved: authViewModel.currentUser?.hardSudokuSolved ?? 0,
+                            points: authViewModel.currentUser?.hardPoints ?? 0,
+                            color: .red
+                        )
+                    }
+                    .padding(.horizontal)
+                }
             }
-            .simultaneousGesture(TapGesture().onEnded {
-                authViewModel.logout()
-            })
         }
-        .padding()
-        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
         .onAppear {
             if authViewModel.currentUser == nil {
                 authViewModel.checkCurrentUser()
             }
         }
     }
+    
+    private func statisticCard(title: String, solved: Int, points: Int, color: Color) -> some View {
+        VStack(spacing: 15) {
+            Text(title)
+                .font(.system(size: 22, weight: .bold))
+                .foregroundColor(color)
+            
+            HStack(spacing: 30) {
+                VStack {
+                    Text("\(solved)")
+                        .font(.system(size: 30, weight: .bold))
+                    Text("Решено")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                }
+                
+                VStack {
+                    Text("\(points)")
+                        .font(.system(size: 30, weight: .bold))
+                    Text("Очков")
+                        .font(.system(size: 16))
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .background(color.opacity(0.1))
+        .cornerRadius(16)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(color.opacity(0.5), lineWidth: 1)
+        )
+    }
 }
-
-//struct ProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileView(authViewModel: AuthViewModel())
-//    }
-//}
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
