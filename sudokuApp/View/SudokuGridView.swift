@@ -6,15 +6,14 @@ struct SudokuGridView: View {
     let fixedCells: Set<SudokuCoordinate>
     @Binding var selectedCell: SudokuCoordinate?
     let incorrectCells: Set<SudokuCoordinate>
-//    let isChecked: Bool
-    let isGameStarted: Bool 
+    let isGameStarted: Bool
     let isSolutionRevealed: Bool
     
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(0..<9, id: \.self) { row in
+            ForEach(0..<9, id: \ .self) { row in
                 HStack(spacing: 0) {
-                    ForEach(0..<9, id: \.self) { col in
+                    ForEach(0..<9, id: \ .self) { col in
                         let coordinate = SudokuCoordinate(row: row, col: col)
                         CellView(
                             value: grid[row][col],
@@ -23,36 +22,52 @@ struct SudokuGridView: View {
                             isSelected: selectedCell == coordinate,
                             isSameValue: isSameValueHighlighted(coordinate),
                             isIncorrect: incorrectCells.contains(coordinate),
-//                            isChecked: isChecked,
+                            isDuplicate: isDuplicate(coordinate),
                             borderWidths: getBorderWidths(row: row, col: col),
                             notes: notes[row][col]
                         )
                         .onTapGesture {
-                            if isGameStarted && !isSolutionRevealed {
-                                selectedCell = coordinate
-                            }
+                            selectedCell = coordinate
                         }
-                        .allowsHitTesting(isGameStarted && !isSolutionRevealed)
                     }
                 }
             }
         }
-        .padding()
-        .background(Color.gray.opacity(0.2))
-        .cornerRadius(10)
     }
 
+    private func isDuplicate(_ coordinate: SudokuCoordinate) -> Bool {
+        let value = grid[coordinate.row][coordinate.col]
+        guard value != 0 else { return false }
+        
+        return (grid[coordinate.row].filter { $0 == value }.count > 1) ||
+               (grid.map { $0[coordinate.col] }.filter { $0 == value }.count > 1) ||
+               isInSameBlock(coordinate, value: value)
+    }
+    
+    private func isInSameBlock(_ coordinate: SudokuCoordinate, value: Int) -> Bool {
+        let startRow = (coordinate.row / 3) * 3
+        let startCol = (coordinate.col / 3) * 3
+        var count = 0
+        
+        for r in startRow..<startRow+3 {
+            for c in startCol..<startCol+3 {
+                if grid[r][c] == value { count += 1 }
+            }
+        }
+        return count > 1
+    }
+    
     private func isCellHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
         return selected.row == coordinate.row || selected.col == coordinate.col ||
-            (selected.row / 3 == coordinate.row / 3 && selected.col / 3 == coordinate.col / 3)
+               (selected.row / 3 == coordinate.row / 3 && selected.col / 3 == coordinate.col / 3)
     }
-
+    
     private func isSameValueHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell, grid[selected.row][selected.col] != 0 else { return false }
         return grid[coordinate.row][coordinate.col] == grid[selected.row][selected.col]
     }
-
+    
     private func getBorderWidths(row: Int, col: Int) -> (top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) {
         (
             top: row % 3 == 0 ? 3.0 : 0.5,
@@ -62,7 +77,6 @@ struct SudokuGridView: View {
         )
     }
 }
-
 
 #Preview {
     SudokuGridView(
