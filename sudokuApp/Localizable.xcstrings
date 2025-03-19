@@ -58,6 +58,23 @@
         }
       }
     },
+    "back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go back"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вернуться"
+          }
+        }
+      }
+    },
     "beginner.level.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -126,7 +143,7 @@
         }
       }
     },
-    "easy.level" : {
+    "easy" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -139,6 +156,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Лёгкий"
+          }
+        }
+      }
+    },
+    "easy.level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Easy Level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лёгкий уровень"
           }
         }
       }
@@ -251,7 +285,7 @@
         }
       }
     },
-    "hard.level" : {
+    "hard" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -264,6 +298,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сложный"
+          }
+        }
+      }
+    },
+    "hard.level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hard Level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сложный уровень"
           }
         }
       }
@@ -336,7 +387,24 @@
         }
       }
     },
-    "medium.level" : {
+    "logout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        }
+      }
+    },
+    "medium" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -349,6 +417,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Средний"
+          }
+        }
+      }
+    },
+    "medium.level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Medium Level"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средний уровень"
           }
         }
       }
@@ -424,6 +509,23 @@
         }
       }
     },
+    "points" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Points"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очков"
+          }
+        }
+      }
+    },
     "profile.button" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -461,6 +563,23 @@
     "Register" : {
 
     },
+    "solved" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solved"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Решено"
+          }
+        }
+      }
+    },
     "start.button.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -491,6 +610,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Судоку"
+          }
+        }
+      }
+    },
+    "total.score" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Score: %d"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общий счёт: %d"
           }
         }
       }

@@ -46,21 +46,21 @@ struct DifficultySelectionView: View {
                     VStack(spacing: 20) {
                         NavigationLink(value: Difficulty.easy) {
                             difficultyButton(
-                                titleKey: "easy.level",
+                                titleKey: "easy",
                                 subtitle: "beginner.level.subtitle",
                                 color: .green
                             )
                         }
                         NavigationLink(value: Difficulty.medium) {
                             difficultyButton(
-                                titleKey: "medium.level",
+                                titleKey: "medium",
                                 subtitle: "intermediate.level.subtitle",
                                 color: .orange
                             )
                         }
                         NavigationLink(value: Difficulty.hard) {
                             difficultyButton(
-                                titleKey: "hard.level",
+                                titleKey: "hard",
                                 subtitle: "advanced.level.subtitle",
                                 color: .red
                             )
