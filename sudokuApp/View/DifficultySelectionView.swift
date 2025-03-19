@@ -72,7 +72,7 @@ struct DifficultySelectionView: View {
             }
             .navigationBarBackButtonHidden(true)
             .navigationDestination(for: Difficulty.self) { difficulty in
-                SudokuGameView(difficulty: difficulty)
+                SudokuGameView(difficulty: difficulty, authViewModel: authViewModel)
             }
         }
     }

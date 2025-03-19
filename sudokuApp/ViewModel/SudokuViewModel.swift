@@ -17,6 +17,10 @@ class SudokuViewModel: ObservableObject {
     @Published var incorrectCells: Set<SudokuCoordinate> = []
 //    @Published var isChecked: Bool = false
 
+    init(authViewModel: AuthViewModel?) {
+        self.authViewModel = authViewModel
+    }
+    
     private func resetGameState() {
         history = []
         isNoteMode = false

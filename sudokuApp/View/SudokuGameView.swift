@@ -41,15 +41,23 @@ struct AlertIdentifier: Identifiable {
 }
 
 struct SudokuGameView: View {
-    @StateObject private var authViewModel = AuthViewModel()
+    @ObservedObject var authViewModel: AuthViewModel
     let difficulty: Difficulty
-    @StateObject private var viewModel = SudokuViewModel()
     @State private var selectedCell: SudokuCoordinate? = nil
     @State private var isSolutionRevealed = false
     
     @State private var alertIdentifier: AlertIdentifier?
 //    @Published var incorrectCells: Set<SudokuCoordinate> = []
     @Environment(\.presentationMode) var presentationMode
+    
+    @StateObject private var viewModel: SudokuViewModel
+
+    init(difficulty: Difficulty, authViewModel: AuthViewModel) {
+        self.difficulty = difficulty
+        self.authViewModel = authViewModel
+        _viewModel = StateObject(wrappedValue: SudokuViewModel(authViewModel: authViewModel))
+    }
+
     
     var body: some View {
         VStack(spacing: -15) {
@@ -208,5 +216,5 @@ struct SudokuGameView: View {
 }
 
 #Preview {
-    SudokuGameView(difficulty: .medium)
+    SudokuGameView(difficulty: .medium, authViewModel: AuthViewModel())
 }

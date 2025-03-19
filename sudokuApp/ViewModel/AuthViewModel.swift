@@ -86,36 +86,24 @@ class AuthViewModel: ObservableObject {
         if let user = Auth.auth().currentUser {
             db.collection("users").document(user.uid).getDocument { [weak self] document, error in
                 if let error = error {
-                    print("Error fetching user data: \(error.localizedDescription)")
                     self?.currentUser = nil
                     return
                 }
-
-                guard let document = document, document.exists else {
-                    print("Document does not exist for user ID: \(user.uid)")
-                    self?.currentUser = nil
-                    return
-                }
-
-                guard let data = document.data() else {
-                    print("Document data is empty or nil for user ID: \(user.uid)")
-                    self?.currentUser = nil
-                    return
-                }
-
-                if let userModel = UserModel(from: data) {
-                    self?.currentUser = userModel
-                    print("User data loaded successfully: \(userModel)")
+                if let document = document, document.exists {
+                    if let data = document.data(), let userModel = UserModel(from: data) {
+                        self?.currentUser = userModel
+                    } else {
+                        self?.currentUser = nil
+                    }
                 } else {
-                    print("Failed to parse UserModel. Raw data: \(data)")
                     self?.currentUser = nil
                 }
             }
         } else {
-            print("No authenticated user found")
             currentUser = nil
         }
     }
+
 
     func logout() {
         try? Auth.auth().signOut()
@@ -124,6 +112,7 @@ class AuthViewModel: ObservableObject {
 
     func updatePoints(for difficulty: Difficulty, isSolved: Bool) {
         guard let user = currentUser else { return }
+        
         var updatedUser = user
 
         if isSolved {
@@ -145,12 +134,16 @@ class AuthViewModel: ObservableObject {
 
         self.currentUser = updatedUser
 
-        db.collection("users").document(user.id).updateData(updatedUser.dictionary) { error in
+        db.collection("users").document(user.id).setData(updatedUser.dictionary, merge: true) { error in
             if let error = error {
-                print("Error updating points: \(error.localizedDescription)")
+                print("\(error.localizedDescription)")
             } else {
-                print("User points successfully updated in Firestore")
+                DispatchQueue.main.async {
+                    self.objectWillChange.send()
+                    self.checkCurrentUser()
+                }
             }
         }
     }
+
 }
