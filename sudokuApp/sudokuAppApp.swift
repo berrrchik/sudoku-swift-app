@@ -11,6 +11,7 @@ struct sudokuAppApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(authViewModel: AuthViewModel())
+                .preferredColorScheme(.light)
         }
     }
 }
