@@ -36,9 +36,8 @@ extension View {
 
 struct AlertIdentifier: Identifiable {
     enum Choice {
-        case warning, resultCorrect, resultIncorrect
+        case warning, resultCorrect
     }
-    
     var id: Choice
 }
 
@@ -94,9 +93,6 @@ struct SudokuGameView: View {
                     if message.contains("правильно") {
                         print("Correct solution detected")
                         alertIdentifier = AlertIdentifier(id: .resultCorrect)
-                    } else {
-                        print("Incorrect solution detected")
-                        alertIdentifier = AlertIdentifier(id: .resultIncorrect)
                     }
                 }
             }
@@ -123,17 +119,6 @@ struct SudokuGameView: View {
                     dismissButton: .default(Text("ОК"), action: {
                         viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
                     })
-                )
-            case .resultIncorrect:
-                return Alert(
-                    title: Text("Результат"),
-                    message: Text("Судоку решена неверно!"),
-                    primaryButton: .default(Text("Показать ответ"), action: {
-                        viewModel.fillWithSolution()
-                        isSolutionRevealed = true
-                        selectedCell = nil
-                    }),
-                    secondaryButton: .default(Text("Продолжить"))
                 )
             }
         }
