@@ -132,6 +132,7 @@ class SudokuViewModel: ObservableObject {
         for coordinate in fixedCells {
             grid[coordinate.row][coordinate.col] = solution[coordinate.row][coordinate.col]
         }
+        checkGrid()
     }
     
     func fillWithSolution() {
