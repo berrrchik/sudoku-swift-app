@@ -38,7 +38,7 @@ struct AlertIdentifier: Identifiable {
     enum Choice {
         case warning, resultCorrect, resultIncorrect
     }
-
+    
     var id: Choice
 }
 
@@ -49,17 +49,17 @@ struct SudokuGameView: View {
     @State private var isSolutionRevealed = false
     
     @State private var alertIdentifier: AlertIdentifier?
-//    @Published var incorrectCells: Set<SudokuCoordinate> = []
+    //    @Published var incorrectCells: Set<SudokuCoordinate> = []
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject private var viewModel: SudokuViewModel
-
+    
     init(difficulty: Difficulty, authViewModel: AuthViewModel) {
         self.difficulty = difficulty
         self.authViewModel = authViewModel
         _viewModel = StateObject(wrappedValue: SudokuViewModel(authViewModel: authViewModel))
     }
-
+    
     
     var body: some View {
         VStack(spacing: 0) {
@@ -101,39 +101,39 @@ struct SudokuGameView: View {
         .padding()
         .navigationBarBackButtonHidden(true)
         .alert(item: $alertIdentifier) { alert in
-                    switch alert.id {
-                    case .warning:
-                        return Alert(
-                            title: Text("Предупреждение"),
-                            message: Text("После просмотра ответа баллы за решение не будут начислены."),
-                            primaryButton: .default(Text("Всё-равно посмотреть"), action: {
-                                viewModel.fillWithSolution()
-                                isSolutionRevealed = true
-                                selectedCell = nil
-                            }),
-                            secondaryButton: .default(Text("Продолжить решать самостоятельно"))
-                        )
-                    case .resultCorrect:
-                        return Alert(
-                            title: Text("Результат"),
-                            message: Text("Судоку решена правильно! Баллы начислены."),
-                            dismissButton: .default(Text("ОК"), action: {
-                                viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
-                            })
-                        )
-                    case .resultIncorrect:
-                        return Alert(
-                            title: Text("Результат"),
-                            message: Text("Судоку решена неверно!"),
-                            primaryButton: .default(Text("Показать ответ"), action: {
-                                viewModel.fillWithSolution()
-                                isSolutionRevealed = true
-                            }),
-                            secondaryButton: .default(Text("Продолжить"))
-                        )
-                    }
-                }
+            switch alert.id {
+            case .warning:
+                return Alert(
+                    title: Text("Предупреждение"),
+                    message: Text("После просмотра ответа баллы за решение не будут начислены."),
+                    primaryButton: .default(Text("Всё-равно посмотреть"), action: {
+                        viewModel.fillWithSolution()
+                        isSolutionRevealed = true
+                        selectedCell = nil
+                    }),
+                    secondaryButton: .default(Text("Продолжить решать самостоятельно"))
+                )
+            case .resultCorrect:
+                return Alert(
+                    title: Text("Результат"),
+                    message: Text("Судоку решена правильно! Баллы начислены."),
+                    dismissButton: .default(Text("ОК"), action: {
+                        viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
+                    })
+                )
+            case .resultIncorrect:
+                return Alert(
+                    title: Text("Результат"),
+                    message: Text("Судоку решена неверно!"),
+                    primaryButton: .default(Text("Показать ответ"), action: {
+                        viewModel.fillWithSolution()
+                        isSolutionRevealed = true
+                    }),
+                    secondaryButton: .default(Text("Продолжить"))
+                )
             }
+        }
+    }
     
     private func numberButtons() -> some View {
         VStack(spacing: 10) {
@@ -245,10 +245,9 @@ struct SudokuGameView: View {
         }
         .padding()
     }
-
+    
 }
 
 #Preview {
-    SudokuGameView(difficulty: .medium, authViewModel: AuthViewModel())
+    SudokuGameView(difficulty: .easy, authViewModel: AuthViewModel())
 }
-

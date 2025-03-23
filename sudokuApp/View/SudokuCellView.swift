@@ -17,11 +17,11 @@ struct CellView: View {
             Rectangle()
                 .fill(
                     isSelected ? Color.blue.opacity(0.6) :
-                    isIncorrect ? Color.pink.opacity(0.5) :
-                    isDuplicate ? Color.pink.opacity(0.5) :
-                    isSameValue ? Color.blue.opacity(0.3) :
-                    isHighlighted ? Color.gray.opacity(0.3) :
-                    Color.white
+                        isIncorrect ? Color.pink.opacity(0.5) :
+                        isDuplicate ? Color.pink.opacity(0.5) :
+                        isSameValue ? Color.blue.opacity(0.3) :
+                        isHighlighted ? Color.gray.opacity(0.3) :
+                        Color.white
                 )
                 .overlay(borderOverlay)
             
@@ -30,7 +30,7 @@ struct CellView: View {
                     .font(.system(size: isFixed ? 25 : 23, weight: isFixed ? .bold : .regular))
                     .foregroundColor(
                         isIncorrect ? .red :
-                        .black
+                                .black
                     )
             }
             if !notes.isEmpty && !isFixed {

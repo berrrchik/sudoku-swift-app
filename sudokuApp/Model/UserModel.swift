@@ -13,7 +13,7 @@ struct UserModel: Identifiable {
     var easyPoints: Int
     var mediumPoints: Int
     var hardPoints: Int
-
+    
     var dictionary: [String: Any] {
         return [
             "id": id,
@@ -33,7 +33,7 @@ extension UserModel {
     init?(from dictionary: [String: Any]) {
         guard let id = dictionary["id"] as? String,
               let email = dictionary["email"] as? String else { return nil }
-
+        
         self.id = id
         self.email = email
         self.totalPoints = dictionary["totalPoints"] as? Int ?? 0

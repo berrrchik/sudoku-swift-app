@@ -6,7 +6,7 @@ import FirebaseFirestore
 class AuthViewModel: ObservableObject {
     @Published var currentUser: UserModel?
     private let db = Firestore.firestore()
-
+    
     func register(email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
@@ -14,12 +14,12 @@ class AuthViewModel: ObservableObject {
                 completion(error)
                 return
             }
-
+            
             guard let user = result?.user else {
                 completion(NSError(domain: "AuthViewModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve user after registration"]))
                 return
             }
-
+            
             let newUser = UserModel(
                 id: user.uid,
                 email: email,
@@ -31,7 +31,7 @@ class AuthViewModel: ObservableObject {
                 mediumPoints: 0,
                 hardPoints: 0
             )
-
+            
             self?.db.collection("users").document(user.uid).setData(newUser.dictionary) { error in
                 if let error = error {
                     print("Error creating user in Firestore: \(error.localizedDescription)")
@@ -44,7 +44,7 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-
+    
     func login(email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             if let error = error {
@@ -52,12 +52,12 @@ class AuthViewModel: ObservableObject {
                 completion(error)
                 return
             }
-
+            
             guard let user = result?.user else {
                 completion(NSError(domain: "AuthViewModel", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to retrieve user after login"]))
                 return
             }
-
+            
             self?.db.collection("users").document(user.uid).getDocument { document, error in
                 print("Attempting to fetch document for user ID: \(user.uid)")
                 if let error = error {
@@ -103,18 +103,18 @@ class AuthViewModel: ObservableObject {
             currentUser = nil
         }
     }
-
-
+    
+    
     func logout() {
         try? Auth.auth().signOut()
         self.currentUser = nil
     }
-
+    
     func updatePoints(for difficulty: Difficulty, isSolved: Bool) {
         guard let user = currentUser else { return }
         
         var updatedUser = user
-
+        
         if isSolved {
             switch difficulty {
             case .easy:
@@ -131,9 +131,9 @@ class AuthViewModel: ObservableObject {
                 updatedUser.totalPoints += 30
             }
         }
-
+        
         self.currentUser = updatedUser
-
+        
         db.collection("users").document(user.id).setData(updatedUser.dictionary, merge: true) { error in
             if let error = error {
                 print("\(error.localizedDescription)")
@@ -145,5 +145,5 @@ class AuthViewModel: ObservableObject {
             }
         }
     }
-
+    
 }

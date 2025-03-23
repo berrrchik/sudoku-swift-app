@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var authViewModel: AuthViewModel
-
+    
     var body: some View {
         NavigationStack {
             if authViewModel.currentUser == nil {

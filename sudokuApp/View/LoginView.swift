@@ -8,7 +8,7 @@ struct LoginView: View {
     @State private var errorMessage = ""
     @State private var showRegistration = false
     @State private var showDifficultySelection = false
-
+    
     var body: some View {
         VStack(spacing: 30) {
             VStack(spacing: 10) {
@@ -19,7 +19,7 @@ struct LoginView: View {
                     .foregroundColor(.gray)
             }
             .padding(.top, 60)
-
+            
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(NSLocalizedString("email", comment: "Email label"))
@@ -29,7 +29,7 @@ struct LoginView: View {
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                 }
-
+                
                 VStack(alignment: .leading, spacing: 8) {
                     Text(NSLocalizedString("password", comment: "Password label"))
                         .foregroundColor(.gray)
@@ -37,7 +37,7 @@ struct LoginView: View {
                         .textFieldStyle(CustomTextFieldStyle())
                 }
             }
-
+            
             Button(NSLocalizedString("login", comment: "Login button")) {
                 authViewModel.login(email: email, password: password) { error in
                     if let error = error {
@@ -51,11 +51,11 @@ struct LoginView: View {
             .padding()
             .background(Color.blue)
             .cornerRadius(12)
-
+            
             Text(errorMessage)
                 .foregroundColor(.red)
                 .font(.caption)
-
+            
             Spacer()
             
             NavigationLink(NSLocalizedString("no.account.register", comment: "No account? Register"), destination: RegistrationView(authViewModel: authViewModel))

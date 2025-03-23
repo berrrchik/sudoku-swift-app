@@ -8,7 +8,7 @@ struct RegistrationView: View {
     @State private var errorMessage = ""
     @State private var showLogin = false
     @Environment(\.presentationMode) private var presentationMode
-
+    
     var body: some View {
         VStack(spacing: 30) {
             VStack(spacing: 10) {
@@ -19,7 +19,7 @@ struct RegistrationView: View {
                     .foregroundColor(.gray)
             }
             .padding(.top, 60)
-
+            
             VStack(spacing: 20) {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(NSLocalizedString("email", comment: "Email label"))
@@ -28,7 +28,7 @@ struct RegistrationView: View {
                         .textFieldStyle(CustomTextFieldStyle())
                         .autocapitalization(.none)
                 }
-
+                
                 VStack(alignment: .leading, spacing: 8) {
                     Text(NSLocalizedString("password", comment: "Password label"))
                         .foregroundColor(.gray)
@@ -36,7 +36,7 @@ struct RegistrationView: View {
                         .textFieldStyle(CustomTextFieldStyle())
                 }
             }
-
+            
             Button(NSLocalizedString("register", comment: "Register button")) {
                 authViewModel.register(email: email, password: password) { error in
                     if let error = error {
@@ -52,10 +52,10 @@ struct RegistrationView: View {
             .padding()
             .background(Color.blue)
             .cornerRadius(12)
-
+            
             Text(errorMessage)
                 .foregroundColor(.red)
-
+            
             Spacer()
             
             NavigationLink(NSLocalizedString("already.have.account", comment: "Already have an account? Login"), destination: LoginView(authViewModel: authViewModel))

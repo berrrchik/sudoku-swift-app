@@ -4,7 +4,7 @@ import SwiftUI
 struct ProfileView: View {
     @ObservedObject var authViewModel: AuthViewModel
     @Environment(\.dismiss) private var dismiss
-
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -18,9 +18,9 @@ struct ProfileView: View {
                     .foregroundColor(.blue)
                     .font(.system(size: 20, weight: .medium))
                 }
-
+                
                 Spacer()
-
+                
                 Button(action: {
                     if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                        let window = windowScene.windows.first {
@@ -34,23 +34,23 @@ struct ProfileView: View {
             }
             .padding()
             .background(Color.gray.opacity(0.1))
-
+            
             ScrollView {
                 VStack(spacing: 0) {
                     VStack(spacing: 8) {
                         Image(systemName: "person.circle.fill")
                             .font(.system(size: 80))
                             .foregroundColor(.blue)
-
+                        
                         Text(authViewModel.currentUser?.email ?? NSLocalizedString("player", comment: "Default player name"))
                             .font(.system(size: 24, weight: .bold))
-
+                        
                         Text(String(format: NSLocalizedString("total.score", comment: "Total score"), authViewModel.currentUser?.totalPoints ?? 0))
                             .font(.system(size: 20))
                             .foregroundColor(.gray)
                     }
                     .padding(.vertical, 30)
-
+                    
                     VStack(spacing: 20) {
                         statisticCard(
                             title: NSLocalizedString("easy.level", comment: "Easy level"),
@@ -58,14 +58,14 @@ struct ProfileView: View {
                             points: authViewModel.currentUser?.easyPoints ?? 0,
                             color: .green
                         )
-
+                        
                         statisticCard(
                             title: NSLocalizedString("medium.level", comment: "Medium level"),
                             solved: authViewModel.currentUser?.mediumSudokuSolved ?? 0,
                             points: authViewModel.currentUser?.mediumPoints ?? 0,
                             color: .orange
                         )
-
+                        
                         statisticCard(
                             title: NSLocalizedString("hard.level", comment: "Hard level"),
                             solved: authViewModel.currentUser?.hardSudokuSolved ?? 0,
@@ -84,13 +84,13 @@ struct ProfileView: View {
             }
         }
     }
-
+    
     private func statisticCard(title: String, solved: Int, points: Int, color: Color) -> some View {
         VStack(spacing: 15) {
             Text(title)
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(color)
-
+            
             HStack(spacing: 30) {
                 VStack {
                     Text("\(solved)")
@@ -99,7 +99,7 @@ struct ProfileView: View {
                         .font(.system(size: 16))
                         .foregroundColor(.gray)
                 }
-
+                
                 VStack {
                     Text("\(points)")
                         .font(.system(size: 30, weight: .bold))

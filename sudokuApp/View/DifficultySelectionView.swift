@@ -32,7 +32,7 @@ struct DifficultySelectionView: View {
                 .padding(.vertical)
                 .frame(maxWidth: .infinity)
                 .background(Color.gray.opacity(0.1))
-
+                
                 VStack(spacing: 40) {
                     VStack(spacing: 8) {
                         Text(NSLocalizedString("sudoku.text", comment: "Sudoku text"))

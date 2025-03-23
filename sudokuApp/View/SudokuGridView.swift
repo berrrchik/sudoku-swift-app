@@ -34,14 +34,14 @@ struct SudokuGridView: View {
             }
         }
     }
-
+    
     private func isDuplicate(_ coordinate: SudokuCoordinate) -> Bool {
         let value = grid[coordinate.row][coordinate.col]
         guard value != 0 else { return false }
         
         return (grid[coordinate.row].filter { $0 == value }.count > 1) ||
-               (grid.map { $0[coordinate.col] }.filter { $0 == value }.count > 1) ||
-               isInSameBlock(coordinate, value: value)
+        (grid.map { $0[coordinate.col] }.filter { $0 == value }.count > 1) ||
+        isInSameBlock(coordinate, value: value)
     }
     
     private func isInSameBlock(_ coordinate: SudokuCoordinate, value: Int) -> Bool {
@@ -60,7 +60,7 @@ struct SudokuGridView: View {
     private func isCellHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
         guard let selected = selectedCell else { return false }
         return selected.row == coordinate.row || selected.col == coordinate.col ||
-               (selected.row / 3 == coordinate.row / 3 && selected.col / 3 == coordinate.col / 3)
+        (selected.row / 3 == coordinate.row / 3 && selected.col / 3 == coordinate.col / 3)
     }
     
     private func isSameValueHighlighted(_ coordinate: SudokuCoordinate) -> Bool {
@@ -105,6 +105,6 @@ struct SudokuGridView: View {
         incorrectCells: Set([SudokuCoordinate(row: 3, col: 4)]),
         isGameStarted: true,
         isSolutionRevealed: false
-//        isChecked: true
+        //        isChecked: true
     )
 }
