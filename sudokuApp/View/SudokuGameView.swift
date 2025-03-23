@@ -48,7 +48,6 @@ struct SudokuGameView: View {
     @State private var isSolutionRevealed = false
     
     @State private var alertIdentifier: AlertIdentifier?
-    //    @Published var incorrectCells: Set<SudokuCoordinate> = []
     @Environment(\.presentationMode) var presentationMode
     
     @StateObject private var viewModel: SudokuViewModel
@@ -90,7 +89,7 @@ struct SudokuGameView: View {
                 print("Message received: \(message)")
                 DispatchQueue.main.async {
                     print("Updating alertIdentifier to: \(message.contains("правильно") ? "resultCorrect" : "resultIncorrect")")
-                    if message.contains("правильно") {
+                    if message.contains("правильно") || message.contains("correct") {
                         print("Correct solution detected")
                         alertIdentifier = AlertIdentifier(id: .resultCorrect)
                     }
@@ -103,20 +102,20 @@ struct SudokuGameView: View {
             switch alert.id {
             case .warning:
                 return Alert(
-                    title: Text("Предупреждение"),
-                    message: Text("После просмотра ответа баллы за решение не будут начислены."),
-                    primaryButton: .default(Text("Всё-равно посмотреть"), action: {
+                    title: Text(NSLocalizedString("warning.title", comment: "Title for the warning alert")),
+                    message: Text(NSLocalizedString("warning.message", comment: "Message for the warning alert")),
+                    primaryButton: .default(Text(NSLocalizedString("warning.primaryButton", comment: "Primary button for the warning alert")), action: {
                         viewModel.fillWithSolution()
                         isSolutionRevealed = true
                         selectedCell = nil
                     }),
-                    secondaryButton: .default(Text("Продолжить решать самостоятельно"))
+                    secondaryButton: .default(Text(NSLocalizedString("warning.secondaryButton", comment: "Secondary button for the warning alert")))
                 )
             case .resultCorrect:
                 return Alert(
-                    title: Text("Результат"),
-                    message: Text("Судоку решена правильно! Баллы начислены."),
-                    dismissButton: .default(Text("ОК"), action: {
+                    title: Text(NSLocalizedString("resultCorrect.title", comment: "Title for the correct result alert")),
+                    message: Text(NSLocalizedString("resultCorrect.message", comment: "Message for the correct result alert")),
+                    dismissButton: .default(Text(NSLocalizedString("resultCorrect.dismissButton", comment: "Dismiss button for the correct result alert")), action: {
                         viewModel.grid = Array(repeating: Array(repeating: 0, count: 9), count: 9)
                     })
                 )
@@ -149,7 +148,7 @@ struct SudokuGameView: View {
             }) {
                 HStack(spacing: 4) {
                     Image(systemName: "chevron.left")
-                    Text("Вернуться")
+                    Text(NSLocalizedString("back.button", comment: "Button to go back to the previous screen"))
                 }
                 .foregroundColor(.blue)
                 .font(.system(size: 20, weight: .medium))
@@ -164,7 +163,7 @@ struct SudokuGameView: View {
                     selectedCell = nil
                     viewModel.startGame(difficulty: difficulty)
                 }) {
-                    Text("Начать")
+                    Text(NSLocalizedString("start.button", comment: "Button to start the game"))
                         .foregroundColor(.blue)
                         .font(.system(size: 20, weight: .medium))
                 }
@@ -173,7 +172,7 @@ struct SudokuGameView: View {
                     print("Showing warning alert")
                     alertIdentifier = AlertIdentifier(id: .warning)
                 }) {
-                    Text("Ответ")
+                    Text(NSLocalizedString("answer.button", comment: "Button to view the solution"))
                         .foregroundColor(.blue)
                         .font(.system(size: 20, weight: .medium))
                 }
@@ -226,7 +225,7 @@ struct SudokuGameView: View {
                     .frame(width: 24, height: 24)
                     .foregroundColor(.blue)
                     .overlay(
-                        Text(viewModel.isNoteMode ? "on" : "off")
+                        Text(viewModel.isNoteMode ? "On" : "Off")
                             .foregroundColor(.white)
                             .font(.system(size: 12, weight: .bold))
                     )
