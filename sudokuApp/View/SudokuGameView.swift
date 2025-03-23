@@ -69,7 +69,10 @@ struct SudokuGameView: View {
                 grid: $viewModel.grid,
                 notes: $viewModel.notes,
                 fixedCells: viewModel.fixedCells,
-                selectedCell: $selectedCell,
+                selectedCell: Binding(
+                    get: { viewModel.isGameStarted && !isSolutionRevealed ? selectedCell : nil },
+                    set: { newValue in if viewModel.isGameStarted && !isSolutionRevealed { selectedCell = newValue } }
+                ),
                 incorrectCells: viewModel.incorrectCells,
                 isGameStarted: viewModel.isGameStarted,
                 isSolutionRevealed: isSolutionRevealed
@@ -128,6 +131,7 @@ struct SudokuGameView: View {
                     primaryButton: .default(Text("Показать ответ"), action: {
                         viewModel.fillWithSolution()
                         isSolutionRevealed = true
+                        selectedCell = nil
                     }),
                     secondaryButton: .default(Text("Продолжить"))
                 )
@@ -172,6 +176,7 @@ struct SudokuGameView: View {
                 Button(action: {
                     isSolutionRevealed = false
                     viewModel.isGameStarted = true
+                    selectedCell = nil
                     viewModel.startGame(difficulty: difficulty)
                 }) {
                     Text("Начать")
