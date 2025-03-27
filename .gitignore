@@ -2,13 +2,13 @@
 .DS_Store
 build/
 DerivedData/
-*.xcuserdatad
-*.xcuserdata
-*.swp
-*.lock
-*.xcworkspace
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata
+xcuserdata
 
 # Swift Package Manager
+Packages/
 .build/
 
 # Firebase
