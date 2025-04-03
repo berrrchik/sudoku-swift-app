@@ -5,8 +5,7 @@ enum Difficulty {
     
     func numberOfCellsToRemove() -> Int {
         switch self {
-            //        case .easy: return 30
-        case .easy: return 5
+        case .easy: return 30
         case .medium: return 40
         case .hard: return 50
         }

@@ -113,6 +113,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		577C75D42D9F29FC0052ECF3 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				578571532D302A1B00917F88 /* LoginView.swift */,
+				578571552D302A2C00917F88 /* RegistrationView.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		577C75D52D9F2A220052ECF3 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				578571442D2DD25E00917F88 /* DifficultySelectionView.swift */,
+				578571462D2DD27400917F88 /* SudokuGameView.swift */,
+				5785713A2D286D0200917F88 /* SudokuGridView.swift */,
+				578571402D2C615000917F88 /* SudokuCellView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		577C75D62D9F2A2B0052ECF3 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				578571572D302A4200917F88 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		577C75D72D9F2A9B0052ECF3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				578571422D2DAE3C00917F88 /* SudokuGenerator.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		578571022D28678700917F88 = {
 			isa = PBXGroup;
 			children = (
@@ -137,10 +173,11 @@
 		5785710D2D28678700917F88 /* sudokuApp */ = {
 			isa = PBXGroup;
 			children = (
-				578571592D302A5700917F88 /* ViewModel */,
-				578571492D2EADC900917F88 /* View */,
-				578571482D2EADBA00917F88 /* Model */,
 				5785710E2D28678700917F88 /* sudokuAppApp.swift */,
+				578571482D2EADBA00917F88 /* Model */,
+				578571592D302A5700917F88 /* ViewModel */,
+				578571492D2EADC900917F88 /* Views */,
+				577C75D72D9F2A9B0052ECF3 /* Utils */,
 				578571122D28678800917F88 /* Assets.xcassets */,
 				578571142D28678800917F88 /* Preview Content */,
 				5785714C2D300DD200917F88 /* Localizable.xcstrings */,
@@ -179,24 +216,19 @@
 			children = (
 				5785715E2D302A8F00917F88 /* UserModel.swift */,
 				5785713E2D286D7300917F88 /* SudokuModel.swift */,
-				578571422D2DAE3C00917F88 /* SudokuGenerator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		578571492D2EADC900917F88 /* View */ = {
+		578571492D2EADC900917F88 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				578571442D2DD25E00917F88 /* DifficultySelectionView.swift */,
-				578571462D2DD27400917F88 /* SudokuGameView.swift */,
-				5785713A2D286D0200917F88 /* SudokuGridView.swift */,
-				578571402D2C615000917F88 /* SudokuCellView.swift */,
 				578571102D28678700917F88 /* ContentView.swift */,
-				578571532D302A1B00917F88 /* LoginView.swift */,
-				578571552D302A2C00917F88 /* RegistrationView.swift */,
-				578571572D302A4200917F88 /* ProfileView.swift */,
+				577C75D62D9F2A2B0052ECF3 /* Profile */,
+				577C75D52D9F2A220052ECF3 /* Game */,
+				577C75D42D9F29FC0052ECF3 /* Authentication */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		578571592D302A5700917F88 /* ViewModel */ = {
