@@ -85,6 +85,7 @@ sudokuApp/
 ├── App/
 │   └── sudokuAppApp.swift
 ├── Views/
+|   ├── ContentView.swift
 │   ├── Authentication/
 │   │   ├── LoginView.swift
 │   │   └── RegistrationView.swift
