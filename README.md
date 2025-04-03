@@ -55,12 +55,12 @@
 
 ## Скриншоты
 <p align="center">
-   <img src="https://github.com/user-attachments/assets/9109a060-1236-414f-b284-68433be1e3de" alt="Экран выбора сложности" width="32%" />
-   <img src="https://github.com/user-attachments/assets/5b8485aa-7883-471e-9413-01bc5f3aa475" alt="Отображение доски" width="32%" />
-   <img src="https://github.com/user-attachments/assets/d46862ab-1c16-40c7-b49d-32150842eeaf" alt="Отображение судоку" width="32%" />
-   <img src="https://github.com/user-attachments/assets/beed7904-7fd8-477e-a671-edd283c2c4a3" alt="Отображение выбранной ячейки" width="32%" />
-   <img src="https://github.com/user-attachments/assets/a967d3e9-0a88-41fc-8efd-4c323fc892a4" alt="Режим заметок" width="32%" />
-   <img src="https://github.com/user-attachments/assets/959c1d55-ae61-4287-9202-4f61d7d04516" alt="Решение" width="32%" />
+   <img src="https://github.com/user-attachments/assets/f60d4add-5c4b-43bd-95b7-547c95308f18" alt="Экран авторизации" width="32%" />
+   <img src="https://github.com/user-attachments/assets/660f447c-ab09-4974-8b06-5880e4943976" alt="Экран регистрации" width="32%" />
+   <img src="https://github.com/user-attachments/assets/1cdc54c2-7394-4eea-9513-96c7318e63d0" alt="Экран выбора уровня" width="32%" />
+   <img src="https://github.com/user-attachments/assets/e5a5ba41-165f-45a1-9d4c-eb25bfdb8cf6" alt="Экран профиля" width="32%" />
+   <img src="https://github.com/user-attachments/assets/3876ae36-ebb1-40fc-a04a-90685eeab535" alt="Пустое поле" width="32%" />
+   <img src="https://github.com/user-attachments/assets/f581dc88-f5dc-4c97-ab00-1a86c2e053dd" alt="Судоку" width="32%" />
 </p>
 
 ## Требования
