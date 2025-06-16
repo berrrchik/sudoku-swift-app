@@ -122,7 +122,7 @@ sudokuApp/
 
 2. **Клонирование проекта**
 ```bash
-git clone https://github.com/ваш-репозиторий/sudoku-app.git
+git clone https://github.com/berrrchik/sudoku-swift-app
 cd sudoku-app
 ```
 
